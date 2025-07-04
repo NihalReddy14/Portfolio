@@ -1,0 +1,161 @@
+body{
+  background-color: rgb(177, 198, 199);
+}
+.topnav {
+  position: absolute;
+  margin: 20px;
+  width:fit-content;
+  overflow:hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float:left;
+  color: #f4ebeb;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration:none;
+  font-size: 17px;
+}
+
+
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  
+  background-color: #ddd;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: #f2f2f2ac;
+  color: rgb(20, 15, 15);
+}
+
+body, html {
+  height: 100%;
+}
+
+/* The hero image */
+.front-image {
+/* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
+background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("chikku.png");
+
+/* Set a specific height */
+
+height:110%;
+
+
+/* Position and center the image to scale nicely on all screens */
+background-position: center;
+background-repeat: no-repeat;
+display: flex;
+align-items: center;
+justify-content: center;
+background-size: cover;
+position:relative;
+}
+
+/* Place text in the middle of the image */
+.front-text {
+text-align:left;
+position:relative;
+color: white;
+width: 1500px;
+height: 600px;
+}
+
+.bottom-left{
+  position: absolute;
+  bottom: 8px;
+  left: 16px;
+}
+
+
+* {
+  box-sizing: border-box;
+}
+
+.about{
+  text-align: justify;
+  color:rgb(113, 84, 79);
+}
+
+
+.contact{
+
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("contact.png");
+  height: 600px;
+  background-position: center;
+  background-repeat: no-repeat;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  position:relative;
+
+}
+
+.con{
+  color: #eae9e3;
+}
+
+.style{
+  display:inline-block;
+  margin: 6px;
+}
+
+/* Style inputs */
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #baa4a4;
+  background-color:#f5f1f3;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+input[type=submit] {
+  background-color: #02140e;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #070807;
+}
+
+/* Style the container/contact section */
+.container {
+  border-radius: 5px;
+  
+  padding: 10px;
+}
+
+/* Create two columns that float next to eachother */
+.info {
+  float:right;
+  width: 50%;
+  color: #eae9e3;
+  margin-top: 6px;
+  padding: 20px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column, input[type=submit] {
+    width: 100%;
+    margin-top: 0;
+  }
+}
