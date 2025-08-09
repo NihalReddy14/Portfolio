@@ -1,99 +1,265 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
-<meta charset="UTF-8">
-<title>Nihal Reddy</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="stylesheet" href="style.css">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- Latest compiled JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<style>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihal Reddy - Software Engineer</title>
     
-</style>
-<script src="">
-
-</script>
-<body data-bs-spy="scroll" data-bs-target=".topnav" data-bs-offset="50">
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/home.css">
     
-  <div id="home" class="front-image">
-    <div class="topnav fixed-top">
-        <a href="#home">Home</a>
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
-    </div>
-    <div class="front-text">
-      <div class="bottom-left">
-        <h1>Nihal Reddy Cheruku</h1>
-        <p> I'm a developer</p>
-      </div>
-    </div>
-  </div>  
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <div id="about" class="container">
-      <div class="col-sm-9">
-        <p>I am a Computer Science Master's student at George Mason University, passionate about AI and front-end developer. I’ve built AI-driven solutions, predictive models, and web applications. I love solving complex problems and creating impactful, data-driven, and scalable software solutions. </p>
-      </div>
-      <div class="skills" style="text-align: center;">
-        <p>Skills</p>
-        <div class="style" style="display:flex;justify-content: center;">
-          <div class="card" style="width:100px;height:100px">
-            <img class="card-img-top" src="css.png" alt="css" style="height: 90px;">
-          </div>
-          <div class="card" style="width:100px;height:100px">
-            <img class="card-img-top" src="html.png" alt="css" style="height: 90px;">
-          </div>
-          <div class="card" style="width:100px;height:100px">
-            <img class="card-img-top" src="git.png" alt="css" style="height: 90px;">
-          </div>
-          <div class="card" style="width:100px;height:100px">
-            <img class="card-img-top" src="javascript.png" alt="css" style="height: 90px;">
-          </div>
-          <div class="card" style="width:100px;height:100px">
-            <img class="card-img-top" src="mongodb.png" alt="css" style="height: 90px;">
-          </div>
-          <div class="card" style="width:100px;height:100px">
-            <img class="card-img-top" src="nodejs.png" alt="css" style="height: 90px;">
-          </div>
-          <div class="card" style="width:100px;height:100px">
-            <img class="card-img-top" src="reactjs.png" alt="css" style="height: 90px;">
-          </div>
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <!-- Three.js for 3D -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="loader-logo">NR</div>
+            <div class="loader-bar"></div>
         </div>
-      </div>
     </div>
 
-    <div class="container">
-      <div id="projects" class="projects">
-        These are projects which i have done.
-      </div>
-    </div>
-    
-
-  <div id="contact" class="contact">
-    <div class="container">
-        <div class="con" style="text-align:center">
-          <h2>Contact</h2>
-          <p> leave me a message:</p>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <span class="logo-text">NR</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link active">Home</a></li>
+                <li><a href="/pages/about.html" class="nav-link">About</a></li>
+                <li><a href="/pages/skills.html" class="nav-link">Skills</a></li>
+                <li><a href="/pages/experience.html" class="nav-link">Experience</a></li>
+                <li><a href="/pages/projects.html" class="nav-link">Projects</a></li>
+                <li><a href="/pages/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
         </div>
-          <div class="info">
-            <form action="/action_page.php">
-              <label for="fname">First Name </label>
-              <input type="text" id="fname" name="firstname" placeholder="Your name..">
-              <label for="lname">Last Name</label>
-              <input type="text" id="lname" name="lastname" placeholder="Your last name..">
-              
-              <label for="subject">Subject</label>
-              <textarea id="subject" name="subject" placeholder="Write something.." style="height:170px"></textarea>
-              <input type="submit" value="Submit">
-            </form>
-          </div>
-       
-      </div>
-  </div> 
+    </nav>
 
+    <!-- Hero Section with 3D Background -->
+    <section class="hero" id="hero">
+        <div id="canvas-container" class="canvas-container"></div>
+        
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="line">
+                        <span class="word">Hi, I'm</span>
+                        <span class="word highlight">Nihal Reddy</span>
+                    </span>
+                </h1>
+                <h2 class="hero-subtitle">
+                    <span class="typing-text">Software Engineer & AI-Native Developer</span>
+                    <span class="cursor">|</span>
+                </h2>
+                <p class="hero-description">
+                    Master's student in Computer Science at George Mason University, 
+                    crafting exceptional digital experiences with cutting-edge technologies.
+                </p>
+                <div class="hero-cta">
+                    <a href="/pages/projects.html" class="btn btn-primary">
+                        <span>Explore My Work</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="/pages/contact.html" class="btn btn-secondary">
+                        <span>Get In Touch</span>
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="floating-cards">
+                    <div class="card" data-tilt>
+                        <i class="fab fa-react"></i>
+                        <span>React</span>
+                    </div>
+                    <div class="card" data-tilt>
+                        <i class="fab fa-aws"></i>
+                        <span>AWS</span>
+                    </div>
+                    <div class="card" data-tilt>
+                        <i class="fab fa-node-js"></i>
+                        <span>Node.js</span>
+                    </div>
+                    <div class="card" data-tilt>
+                        <i class="fab fa-python"></i>
+                        <span>Python</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="scroll-indicator">
+            <span>Scroll to explore</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
 
+    <!-- Quick Stats -->
+    <section class="stats" id="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card" data-count="10">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Projects Completed</div>
+                    <div class="stat-icon"><i class="fas fa-code"></i></div>
+                </div>
+                <div class="stat-card" data-count="5">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Technologies Mastered</div>
+                    <div class="stat-icon"><i class="fas fa-tools"></i></div>
+                </div>
+                <div class="stat-card" data-count="2">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">AWS Certifications</div>
+                    <div class="stat-icon"><i class="fas fa-certificate"></i></div>
+                </div>
+                <div class="stat-card" data-count="1">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Year Experience</div>
+                    <div class="stat-icon"><i class="fas fa-briefcase"></i></div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- Featured Projects Preview -->
+    <section class="featured-projects">
+        <div class="container">
+            <h2 class="section-title">
+                <span>Featured Work</span>
+                <a href="/pages/projects.html" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+            </h2>
+            
+            <div class="projects-carousel">
+                <div class="project-preview" data-tilt>
+                    <div class="project-image">
+                        <img src="assets/images/project-placeholder.svg" alt="Connect 4 AI">
+                        <div class="project-overlay">
+                            <a href="/pages/projects.html#connect4" class="project-link">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h3>Connect 4 AI Game</h3>
+                        <p>AI-powered game with advanced algorithms</p>
+                        <div class="project-tech">
+                            <span>Python</span>
+                            <span>AI/ML</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-preview" data-tilt>
+                    <div class="project-image">
+                        <img src="assets/images/project-placeholder.svg" alt="Survey App">
+                        <div class="project-overlay">
+                            <a href="/pages/projects.html#survey" class="project-link">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h3>Fullstack Survey App</h3>
+                        <p>Modern web application with Angular & Spring Boot</p>
+                        <div class="project-tech">
+                            <span>Angular</span>
+                            <span>Spring Boot</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-preview" data-tilt>
+                    <div class="project-image">
+                        <img src="assets/images/project-placeholder.svg" alt="University System">
+                        <div class="project-overlay">
+                            <a href="/pages/projects.html#university" class="project-link">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h3>University Management</h3>
+                        <p>Comprehensive system for 3000+ students</p>
+                        <div class="project-tech">
+                            <span>JavaScript</span>
+                            <span>Database</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Let's Build Something Amazing Together</h2>
+                <p>I'm always interested in new opportunities and collaborations</p>
+                <div class="cta-buttons">
+                    <a href="/pages/contact.html" class="btn btn-light">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>Send Message</span>
+                    </a>
+                    <a href="https://github.com/NihalReddy14" target="_blank" class="btn btn-outline">
+                        <i class="fab fa-github"></i>
+                        <span>View GitHub</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>Nihal Reddy</h3>
+                    <p>Software Engineer & AI-Native Developer</p>
+                </div>
+                <div class="footer-links">
+                    <a href="https://github.com/NihalReddy14" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/nihalcheruku" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:nihalcheruku@gmail.com"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Nihal Reddy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="assets/js/three-scene.js"></script>
+    <script src="assets/js/animations.js"></script>
+    <script src="assets/js/main.js"></script>
+    
+    <!-- Vanilla Tilt for 3D card effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
 </body>
 </html>

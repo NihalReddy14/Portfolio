@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experience - Nihal Reddy</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="../assets/css/experience.css">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Three.js for 3D -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <span class="logo-text">NR</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/pages/about.html" class="nav-link">About</a></li>
+                <li><a href="/pages/skills.html" class="nav-link">Skills</a></li>
+                <li><a href="/pages/experience.html" class="nav-link active">Experience</a></li>
+                <li><a href="/pages/projects.html" class="nav-link">Projects</a></li>
+                <li><a href="/pages/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Experience Hero -->
+    <section class="experience-hero">
+        <div class="experience-3d-bg" id="experience-canvas"></div>
+        <div class="container">
+            <div class="experience-hero-content">
+                <h1 class="page-title">
+                    <span class="line">Professional Experience</span>
+                </h1>
+                <p class="page-subtitle">My journey in software engineering</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Timeline -->
+    <section class="experience-timeline">
+        <div class="container">
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+                
+                <!-- Current Position -->
+                <div class="timeline-item current" data-year="2025">
+                    <div class="timeline-marker">
+                        <div class="marker-dot"></div>
+                        <div class="marker-year">2025</div>
+                    </div>
+                    <div class="timeline-content" data-tilt>
+                        <div class="content-header">
+                            <h3>AI-Native Developer Intern</h3>
+                            <h4>Chinchilla AI</h4>
+                            <div class="content-meta">
+                                <span><i class="fas fa-calendar"></i> July 2025 - Present</span>
+                                <span><i class="fas fa-map-marker-alt"></i> Remote</span>
+                            </div>
+                        </div>
+                        <div class="content-body">
+                            <p class="role-description">
+                                Developing and deploying production-grade applications using AI-first methodologies, 
+                                accelerating delivery by up to 10x compared to traditional development pipelines.
+                            </p>
+                            <div class="achievements">
+                                <h5>Key Achievements:</h5>
+                                <ul>
+                                    <li>
+                                        <i class="fas fa-check-circle"></i>
+                                        Built full-stack cloud-native applications with Next.js, React, and AWS Amplify Gen 2
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check-circle"></i>
+                                        Implemented secure authentication with AWS Cognito and real-time features using GraphQL subscriptions
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check-circle"></i>
+                                        Integrated Stripe payment processing with DynamoDB and S3 for scalable e-commerce solutions
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check-circle"></i>
+                                        Achieved sub-100ms API response times for real-time user operations
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check-circle"></i>
+                                        Specialized in enterprise-grade cloud deployment strategies and resilient architectures
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="tech-stack">
+                                <h5>Technologies Used:</h5>
+                                <div class="tech-tags">
+                                    <span>Next.js</span>
+                                    <span>React</span>
+                                    <span>AWS Amplify</span>
+                                    <span>GraphQL</span>
+                                    <span>TypeScript</span>
+                                    <span>DynamoDB</span>
+                                    <span>S3</span>
+                                    <span>Cognito</span>
+                                    <span>Stripe</span>
+                                    <span>Claude Code CLI</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Academic Projects -->
+                <div class="timeline-item" data-year="2024">
+                    <div class="timeline-marker">
+                        <div class="marker-dot"></div>
+                        <div class="marker-year">2024</div>
+                    </div>
+                    <div class="timeline-content" data-tilt>
+                        <div class="content-header">
+                            <h3>Graduate Research Assistant</h3>
+                            <h4>George Mason University</h4>
+                            <div class="content-meta">
+                                <span><i class="fas fa-calendar"></i> August 2023 - May 2024</span>
+                                <span><i class="fas fa-map-marker-alt"></i> Fairfax, VA</span>
+                            </div>
+                        </div>
+                        <div class="content-body">
+                            <p class="role-description">
+                                Conducted research in secure software design and network security, contributing to 
+                                academic papers and developing proof-of-concept implementations.
+                            </p>
+                            <div class="achievements">
+                                <h5>Key Projects:</h5>
+                                <ul>
+                                    <li>
+                                        <i class="fas fa-check-circle"></i>
+                                        Developed secure authentication systems using modern cryptographic protocols
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check-circle"></i>
+                                        Analyzed vulnerabilities in web applications and proposed mitigation strategies
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check-circle"></i>
+                                        Created automated testing frameworks for security assessment
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="tech-stack">
+                                <h5>Technologies Used:</h5>
+                                <div class="tech-tags">
+                                    <span>Python</span>
+                                    <span>Java</span>
+                                    <span>Security Protocols</span>
+                                    <span>Cryptography</span>
+                                    <span>Network Analysis</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Academic Experience -->
+                <div class="timeline-item" data-year="2023">
+                    <div class="timeline-marker">
+                        <div class="marker-dot"></div>
+                        <div class="marker-year">2023</div>
+                    </div>
+                    <div class="timeline-content" data-tilt>
+                        <div class="content-header">
+                            <h3>Software Development Projects</h3>
+                            <h4>Academic & Personal</h4>
+                            <div class="content-meta">
+                                <span><i class="fas fa-calendar"></i> 2022 - 2023</span>
+                                <span><i class="fas fa-map-marker-alt"></i> Various</span>
+                            </div>
+                        </div>
+                        <div class="content-body">
+                            <p class="role-description">
+                                Led and contributed to multiple software development projects, gaining hands-on 
+                                experience with modern technologies and development practices.
+                            </p>
+                            <div class="achievements">
+                                <h5>Notable Projects:</h5>
+                                <ul>
+                                    <li>
+                                        <i class="fas fa-check-circle"></i>
+                                        University Management System - Organized records for 3000+ students
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check-circle"></i>
+                                        AI-powered Connect 4 game with advanced algorithms
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check-circle"></i>
+                                        Full-stack survey application with Angular and Spring Boot
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="tech-stack">
+                                <h5>Technologies Used:</h5>
+                                <div class="tech-tags">
+                                    <span>JavaScript</span>
+                                    <span>Angular</span>
+                                    <span>Spring Boot</span>
+                                    <span>Python</span>
+                                    <span>SQL</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Overview -->
+    <section class="experience-skills">
+        <div class="container">
+            <h2 class="section-title">
+                <span>Skills Gained Through Experience</span>
+            </h2>
+            <div class="skills-overview">
+                <div class="skill-category" data-tilt>
+                    <div class="category-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Technical Skills</h3>
+                    <ul>
+                        <li>Full-stack web development</li>
+                        <li>Cloud architecture design</li>
+                        <li>API development and integration</li>
+                        <li>Database design and optimization</li>
+                        <li>Security best practices</li>
+                    </ul>
+                </div>
+                
+                <div class="skill-category" data-tilt>
+                    <div class="category-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Soft Skills</h3>
+                    <ul>
+                        <li>Team collaboration</li>
+                        <li>Problem-solving</li>
+                        <li>Project management</li>
+                        <li>Technical communication</li>
+                        <li>Continuous learning</li>
+                    </ul>
+                </div>
+                
+                <div class="skill-category" data-tilt>
+                    <div class="category-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>Methodologies</h3>
+                    <ul>
+                        <li>Agile/Scrum</li>
+                        <li>CI/CD practices</li>
+                        <li>Test-driven development</li>
+                        <li>Code review processes</li>
+                        <li>DevOps principles</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Career Goals -->
+    <section class="career-goals">
+        <div class="container">
+            <h2 class="section-title">
+                <span>Career Goals</span>
+            </h2>
+            <div class="goals-content">
+                <div class="goal-card" data-tilt>
+                    <div class="goal-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>Short-term Goals</h3>
+                    <p>
+                        Complete my Master's degree and secure a full-time position as a Software Engineer 
+                        at a innovative tech company where I can contribute to cutting-edge projects.
+                    </p>
+                </div>
+                
+                <div class="goal-card" data-tilt>
+                    <div class="goal-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Long-term Vision</h3>
+                    <p>
+                        Become a technical leader in cloud-native development and AI integration, 
+                        mentoring others and driving innovation in software architecture.
+                    </p>
+                </div>
+                
+                <div class="goal-card" data-tilt>
+                    <div class="goal-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3>Continuous Growth</h3>
+                    <p>
+                        Stay at the forefront of technology trends, contribute to open-source projects, 
+                        and share knowledge through technical writing and speaking engagements.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="experience-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Interested in Working Together?</h2>
+                <p>I'm always open to discussing new opportunities and exciting projects</p>
+                <div class="cta-buttons">
+                    <a href="/pages/contact.html" class="btn btn-primary">
+                        <i class="fas fa-envelope"></i>
+                        <span>Get In Touch</span>
+                    </a>
+                    <a href="https://linkedin.com/in/nihalcheruku" target="_blank" class="btn btn-secondary">
+                        <i class="fab fa-linkedin"></i>
+                        <span>Connect on LinkedIn</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>Nihal Reddy</h3>
+                    <p>Software Engineer & AI-Native Developer</p>
+                </div>
+                <div class="footer-links">
+                    <a href="https://github.com/NihalReddy14" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/nihalcheruku" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:nihalcheruku@gmail.com"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Nihal Reddy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../assets/js/experience-3d.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+</body>
+</html>

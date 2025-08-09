@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills - Nihal Reddy</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="../assets/css/skills.css">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+    
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Three.js for 3D -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <span class="logo-text">NR</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/pages/about.html" class="nav-link">About</a></li>
+                <li><a href="/pages/skills.html" class="nav-link active">Skills</a></li>
+                <li><a href="/pages/experience.html" class="nav-link">Experience</a></li>
+                <li><a href="/pages/projects.html" class="nav-link">Projects</a></li>
+                <li><a href="/pages/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Skills Hero -->
+    <section class="skills-hero">
+        <div class="skills-3d-bg" id="skills-canvas"></div>
+        <div class="container">
+            <div class="skills-hero-content">
+                <h1 class="page-title">
+                    <span class="line">Technical Skills</span>
+                </h1>
+                <p class="page-subtitle">Expertise across the full technology stack</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Skills Visualization -->
+    <section class="skills-visualization">
+        <div class="container">
+            <div class="skills-intro">
+                <h2>My Technology Stack</h2>
+                <p>Click on any skill category to explore in detail</p>
+            </div>
+            
+            <div class="skills-categories">
+                <button class="category-btn active" data-category="all">
+                    <i class="fas fa-layer-group"></i>
+                    <span>All Skills</span>
+                </button>
+                <button class="category-btn" data-category="languages">
+                    <i class="fas fa-code"></i>
+                    <span>Languages</span>
+                </button>
+                <button class="category-btn" data-category="frontend">
+                    <i class="fas fa-laptop-code"></i>
+                    <span>Frontend</span>
+                </button>
+                <button class="category-btn" data-category="backend">
+                    <i class="fas fa-server"></i>
+                    <span>Backend</span>
+                </button>
+                <button class="category-btn" data-category="cloud">
+                    <i class="fas fa-cloud"></i>
+                    <span>Cloud & DevOps</span>
+                </button>
+                <button class="category-btn" data-category="tools">
+                    <i class="fas fa-tools"></i>
+                    <span>Tools</span>
+                </button>
+            </div>
+
+            <div class="skills-grid" id="skills-grid">
+                <!-- Programming Languages -->
+                <div class="skill-card" data-category="languages" data-level="95" data-tilt>
+                    <div class="skill-icon">
+                        <i class="devicon-javascript-plain"></i>
+                    </div>
+                    <h3>JavaScript</h3>
+                    <div class="skill-level">
+                        <div class="level-bar" style="--level: 95%"></div>
+                    </div>
+                    <div class="skill-details">
+                        <p>ES6+, Async/Await, Promises</p>
+                    </div>
+                </div>
+
+                <div class="skill-card" data-category="languages" data-level="90" data-tilt>
+                    <div class="skill-icon">
+                        <i class="devicon-typescript-plain"></i>
+                    </div>
+                    <h3>TypeScript</h3>
+                    <div class="skill-level">
+                        <div class="level-bar" style="--level: 90%"></div>
+                    </div>
+                    <div class="skill-details">
+                        <p>Type Safety, Interfaces, Generics</p>
+                    </div>
+                </div>
+
+                <div class="skill-card" data-category="languages" data-level="85" data-tilt>
+                    <div class="skill-icon">
+                        <i class="devicon-python-plain"></i>
+                    </div>
+                    <h3>Python</h3>
+                    <div class="skill-level">
+                        <div class="level-bar" style="--level: 85%"></div>
+                    </div>
+                    <div class="skill-details">
+                        <p>Django, FastAPI, Data Science</p>
+                    </div>
+                </div>
+
+                <div class="skill-card" data-category="languages" data-level="88" data-tilt>
+                    <div class="skill-icon">
+                        <i class="devicon-java-plain"></i>
+                    </div>
+                    <h3>Java</h3>
+                    <div class="skill-level">
+                        <div class="level-bar" style="--level: 88%"></div>
+                    </div>
+                    <div class="skill-details">
+                        <p>Spring Boot, OOP, Multithreading</p>
+                    </div>
+                </div>
+
+                <div class="skill-card" data-category="languages" data-level="80" data-tilt>
+                    <div class="skill-icon">
+                        <i class="devicon-c-plain"></i>
+                    </div>
+                    <h3>C/C++</h3>
+                    <div class="skill-level">
+                        <div class="level-bar" style="--level: 80%"></div>
+                    </div>
+                    <div class="skill-details">
+                        <p>Systems Programming, Memory Management</p>
+                    </div>
+                </div>
+
+                <!-- Frontend Technologies -->
+                <div class="skill-card" data-category="frontend" data-level="95" data-tilt>
+                    <div class="skill-icon">
+                        <i class="devicon-react-original"></i>
+                    </div>
+                    <h3>React</h3>
+                    <div class="skill-level">
+                        <div class="level-bar" style="--level: 95%"></div>
+                    </div>
+                    <div class="skill-details">
+                        <p>Hooks, Context, Redux, React Router</p>
+                    </div>
+                </div>
+
+                <div class="skill-card" data-category="frontend" data-level="90" data-tilt>
+                    <div class="skill-icon">
+                        <i class="devicon-nextjs-original"></i>
+                    </div>
+                    <h3>Next.js</h3>
+                    <div class="skill-level">
+                        <div class="level-bar" style="--level: 90%"></div>
+                    </div>
+                    <div class="skill-details">
+                        <p>SSR, SSG, API Routes, App Router</p>
+                    </div>
+                </div>
+
+                <div class="skill-card" data-category="frontend" data-level="85" data-tilt>
+                    <div class="skill-icon">
+                        <i class="devicon-angularjs-plain"></i>
+                    </div>
+                    <h3>Angular</h3>
+                    <div class="skill-level">
+                        <div class="level-bar" style="--level: 85%"></div>
+                    </div>
+                    <div class="skill-details">
+                        <p>Components, Services, RxJS</p>
+                    </div>
+                </div>
+
+                <div class="skill-card" data-category="frontend" data-level="92" data-tilt>
+                    <div class="skill-icon">
+                        <i class="devicon-html5-plain"></i>
+                    </div>
+                    <h3>HTML5 & CSS3</h3>
+                    <div class="skill-level">
+                        <div class="level-bar" style="--level: 92%"></div>
+                    </div>
+                    <div class="skill-details">
+                        <p>Semantic HTML, Flexbox, Grid, Animations</p>
+                    </div>
+                </div>
+
+                <!-- Backend Technologies -->
+                <div class="skill-card" data-category="backend" data-level="90" data-tilt>
+                    <div class="skill-icon">
+                        <i class="devicon-nodejs-plain"></i>
+                    </div>
+                    <h3>Node.js</h3>
+                    <div class="skill-level">
+                        <div class="level-bar" style="--level: 90%"></div>
+                    </div>
+                    <div class="skill-details">
+                        <p>Express, REST APIs, Authentication</p>
+                    </div>
+                </div>
+
+                <div class="skill-card" data-category="backend" data-level="85" data-tilt>
+                    <div class="skill-icon">
+                        <i class="devicon-spring-plain"></i>
+                    </div>
+                    <h3>Spring Boot</h3>
+                    <div class="skill-level">
+                        <div class="level-bar" style="--level: 85%"></div>
+                    </div>
+                    <div class="skill-details">
+                        <p>MVC, Security, Data JPA</p>
+                    </div>
+                </div>
+
+                <div class="skill-card" data-category="backend" data-level="88" data-tilt>
+                    <div class="skill-icon">
+                        <i class="devicon-graphql-plain"></i>
+                    </div>
+                    <h3>GraphQL</h3>
+                    <div class="skill-level">
+                        <div class="level-bar" style="--level: 88%"></div>
+                    </div>
+                    <div class="skill-details">
+                        <p>Apollo, Resolvers, Subscriptions</p>
+                    </div>
+                </div>
+
+                <!-- Cloud & DevOps -->
+                <div class="skill-card" data-category="cloud" data-level="92" data-tilt>
+                    <div class="skill-icon">
+                        <i class="devicon-amazonwebservices-original"></i>
+                    </div>
+                    <h3>AWS</h3>
+                    <div class="skill-level">
+                        <div class="level-bar" style="--level: 92%"></div>
+                    </div>
+                    <div class="skill-details">
+                        <p>EC2, S3, Lambda, Amplify, DynamoDB</p>
+                    </div>
+                </div>
+
+                <div class="skill-card" data-category="cloud" data-level="85" data-tilt>
+                    <div class="skill-icon">
+                        <i class="devicon-docker-plain"></i>
+                    </div>
+                    <h3>Docker</h3>
+                    <div class="skill-level">
+                        <div class="level-bar" style="--level: 85%"></div>
+                    </div>
+                    <div class="skill-details">
+                        <p>Containers, Compose, Multi-stage builds</p>
+                    </div>
+                </div>
+
+                <div class="skill-card" data-category="cloud" data-level="80" data-tilt>
+                    <div class="skill-icon">
+                        <i class="devicon-jenkins-line"></i>
+                    </div>
+                    <h3>CI/CD</h3>
+                    <div class="skill-level">
+                        <div class="level-bar" style="--level: 80%"></div>
+                    </div>
+                    <div class="skill-details">
+                        <p>Jenkins, GitHub Actions, Pipelines</p>
+                    </div>
+                </div>
+
+                <!-- Tools & Databases -->
+                <div class="skill-card" data-category="tools" data-level="90" data-tilt>
+                    <div class="skill-icon">
+                        <i class="devicon-git-plain"></i>
+                    </div>
+                    <h3>Git & GitHub</h3>
+                    <div class="skill-level">
+                        <div class="level-bar" style="--level: 90%"></div>
+                    </div>
+                    <div class="skill-details">
+                        <p>Version Control, Branching, CI/CD</p>
+                    </div>
+                </div>
+
+                <div class="skill-card" data-category="tools" data-level="88" data-tilt>
+                    <div class="skill-icon">
+                        <i class="devicon-mongodb-plain"></i>
+                    </div>
+                    <h3>MongoDB</h3>
+                    <div class="skill-level">
+                        <div class="level-bar" style="--level: 88%"></div>
+                    </div>
+                    <div class="skill-details">
+                        <p>NoSQL, Aggregation, Indexing</p>
+                    </div>
+                </div>
+
+                <div class="skill-card" data-category="tools" data-level="85" data-tilt>
+                    <div class="skill-icon">
+                        <i class="devicon-mysql-plain"></i>
+                    </div>
+                    <h3>SQL</h3>
+                    <div class="skill-level">
+                        <div class="level-bar" style="--level: 85%"></div>
+                    </div>
+                    <div class="skill-details">
+                        <p>MySQL, PostgreSQL, Query Optimization</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section class="certifications">
+        <div class="container">
+            <h2 class="section-title">
+                <span>Certifications</span>
+            </h2>
+            <div class="cert-grid">
+                <div class="cert-card" data-tilt>
+                    <div class="cert-icon">
+                        <img src="https://d1.awsstatic.com/certification/badges/AWS-Certified-Cloud-Practitioner_badge.634f8a21af2e0e956ed8905a72366146ba22b74c.png" alt="AWS Cloud">
+                    </div>
+                    <div class="cert-content">
+                        <h3>AWS Certified Cloud Practitioner</h3>
+                        <p>Amazon Web Services</p>
+                        <div class="cert-meta">
+                            <span><i class="fas fa-calendar"></i> 2024</span>
+                            <span><i class="fas fa-check-circle"></i> Active</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cert-card" data-tilt>
+                    <div class="cert-icon">
+                        <img src="https://d1.awsstatic.com/certification/badges/AWS-Certified-Machine-Learning-Specialty_badge.e5c5d2a7b6a4a4e4b3d7c5c5d2a7b6a4.png" alt="AWS ML">
+                    </div>
+                    <div class="cert-content">
+                        <h3>AWS Certified AI-ML</h3>
+                        <p>Amazon Web Services</p>
+                        <div class="cert-meta">
+                            <span><i class="fas fa-calendar"></i> 2024</span>
+                            <span><i class="fas fa-check-circle"></i> Active</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Stats -->
+    <section class="skills-stats">
+        <div class="container">
+            <h2 class="section-title">
+                <span>Skill Distribution</span>
+            </h2>
+            <div class="stats-visualization">
+                <div class="skill-chart" id="skill-chart"></div>
+                <div class="skill-legend">
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #6366f1"></span>
+                        <span>Languages</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #ec4899"></span>
+                        <span>Frontend</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #14b8a6"></span>
+                        <span>Backend</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #f59e0b"></span>
+                        <span>Cloud & DevOps</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #8b5cf6"></span>
+                        <span>Tools</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learning Section -->
+    <section class="learning">
+        <div class="container">
+            <h2 class="section-title">
+                <span>Currently Learning</span>
+            </h2>
+            <div class="learning-grid">
+                <div class="learning-card" data-tilt>
+                    <div class="learning-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Machine Learning</h3>
+                    <p>Exploring TensorFlow and PyTorch for deep learning applications</p>
+                </div>
+                <div class="learning-card" data-tilt>
+                    <div class="learning-icon">
+                        <i class="fas fa-cube"></i>
+                    </div>
+                    <h3>Kubernetes</h3>
+                    <p>Container orchestration and microservices deployment at scale</p>
+                </div>
+                <div class="learning-card" data-tilt>
+                    <div class="learning-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Cybersecurity</h3>
+                    <p>Advanced security practices and penetration testing techniques</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>Nihal Reddy</h3>
+                    <p>Software Engineer & AI-Native Developer</p>
+                </div>
+                <div class="footer-links">
+                    <a href="https://github.com/NihalReddy14" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/nihalcheruku" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:nihalcheruku@gmail.com"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Nihal Reddy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../assets/js/skills-3d.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+</body>
+</html>

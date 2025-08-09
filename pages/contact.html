@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Nihal Reddy</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="../assets/css/contact.css">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Three.js for 3D -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <span class="logo-text">NR</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/pages/about.html" class="nav-link">About</a></li>
+                <li><a href="/pages/skills.html" class="nav-link">Skills</a></li>
+                <li><a href="/pages/experience.html" class="nav-link">Experience</a></li>
+                <li><a href="/pages/projects.html" class="nav-link">Projects</a></li>
+                <li><a href="/pages/contact.html" class="nav-link active">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contact Hero -->
+    <section class="contact-hero">
+        <div class="contact-3d-bg" id="contact-canvas"></div>
+        <div class="container">
+            <div class="contact-hero-content">
+                <h1 class="page-title">
+                    <span class="line">Get In Touch</span>
+                </h1>
+                <p class="page-subtitle">Let's discuss your next project or opportunity</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Content -->
+    <section class="contact-content">
+        <div class="container">
+            <div class="contact-grid">
+                <!-- Contact Form -->
+                <div class="contact-form-section">
+                    <div class="form-header">
+                        <h2>Send Me a Message</h2>
+                        <p>I'll get back to you as soon as possible</p>
+                    </div>
+                    
+                    <form class="contact-form" id="contact-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Your Name</label>
+                                <input type="text" id="name" name="name" required>
+                                <span class="form-icon"><i class="fas fa-user"></i></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Your Email</label>
+                                <input type="email" id="email" name="email" required>
+                                <span class="form-icon"><i class="fas fa-envelope"></i></span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" required>
+                            <span class="form-icon"><i class="fas fa-heading"></i></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Your Message</label>
+                            <textarea id="message" name="message" rows="6" required></textarea>
+                            <span class="form-icon"><i class="fas fa-comment-alt"></i></span>
+                        </div>
+                        
+                        <div class="form-footer">
+                            <button type="submit" class="btn btn-primary btn-submit">
+                                <i class="fas fa-paper-plane"></i>
+                                <span>Send Message</span>
+                            </button>
+                            <div class="form-status" id="form-status"></div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="contact-info-section">
+                    <div class="info-card" data-tilt>
+                        <div class="info-header">
+                            <h3>Let's Connect</h3>
+                            <p>Feel free to reach out through any of these channels</p>
+                        </div>
+                        
+                        <div class="info-items">
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h4>Email</h4>
+                                    <a href="mailto:nihalcheruku@gmail.com">nihalcheruku@gmail.com</a>
+                                </div>
+                            </div>
+                            
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h4>Phone</h4>
+                                    <a href="tel:571-544-2511">571-544-2511</a>
+                                </div>
+                            </div>
+                            
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h4>Location</h4>
+                                    <p>Fairfax, VA 22030</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="social-section">
+                            <h4>Connect on Social</h4>
+                            <div class="social-links">
+                                <a href="https://github.com/NihalReddy14" target="_blank" class="social-link" data-tooltip="GitHub">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="https://linkedin.com/in/nihalcheruku" target="_blank" class="social-link" data-tooltip="LinkedIn">
+                                    <i class="fab fa-linkedin"></i>
+                                </a>
+                                <a href="https://twitter.com/nihalreddy" target="_blank" class="social-link" data-tooltip="Twitter">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Availability Card -->
+                    <div class="availability-card" data-tilt>
+                        <div class="availability-header">
+                            <div class="status-indicator available"></div>
+                            <h4>Currently Available</h4>
+                        </div>
+                        <p>I'm open to new opportunities and interesting projects. Expected graduation: May 2025</p>
+                        <div class="response-time">
+                            <i class="fas fa-clock"></i>
+                            <span>Typical response time: 24-48 hours</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">
+                <span>Frequently Asked Questions</span>
+            </h2>
+            <div class="faq-grid">
+                <div class="faq-item" data-tilt>
+                    <div class="faq-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3>What type of projects do you work on?</h3>
+                    <p>I work on full-stack web applications, cloud-native solutions, and AI-integrated systems. 
+                       I'm particularly interested in projects that involve modern technologies and innovative approaches.</p>
+                </div>
+                
+                <div class="faq-item" data-tilt>
+                    <div class="faq-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3>Are you available for internships?</h3>
+                    <p>I'm currently working as an AI-Native Developer Intern at Chinchilla AI. 
+                       I'll be available for full-time positions starting May 2025 after graduation.</p>
+                </div>
+                
+                <div class="faq-item" data-tilt>
+                    <div class="faq-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Do you take on freelance work?</h3>
+                    <p>I'm open to discussing freelance opportunities for interesting projects, 
+                       especially those involving cutting-edge technologies or meaningful impact.</p>
+                </div>
+                
+                <div class="faq-item" data-tilt>
+                    <div class="faq-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>How can we collaborate?</h3>
+                    <p>I'm always interested in collaborating on open-source projects, hackathons, 
+                       or innovative tech initiatives. Feel free to reach out with your ideas!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="contact-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Start a Conversation?</h2>
+                <p>Whether it's a job opportunity, project collaboration, or just a friendly chat about tech, I'm all ears!</p>
+                <div class="cta-buttons">
+                    <a href="mailto:nihalcheruku@gmail.com" class="btn btn-light">
+                        <i class="fas fa-envelope"></i>
+                        <span>Email Me Directly</span>
+                    </a>
+                    <a href="https://calendly.com/nihalreddy" target="_blank" class="btn btn-outline">
+                        <i class="fas fa-calendar"></i>
+                        <span>Schedule a Call</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>Nihal Reddy</h3>
+                    <p>Software Engineer & AI-Native Developer</p>
+                </div>
+                <div class="footer-links">
+                    <a href="https://github.com/NihalReddy14" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/nihalcheruku" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:nihalcheruku@gmail.com"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Nihal Reddy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../assets/js/contact-3d.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+</body>
+</html>

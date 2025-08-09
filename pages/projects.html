@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Nihal Reddy</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="../assets/css/projects.css">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Three.js for 3D -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <span class="logo-text">NR</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/pages/about.html" class="nav-link">About</a></li>
+                <li><a href="/pages/skills.html" class="nav-link">Skills</a></li>
+                <li><a href="/pages/experience.html" class="nav-link">Experience</a></li>
+                <li><a href="/pages/projects.html" class="nav-link active">Projects</a></li>
+                <li><a href="/pages/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Projects Hero -->
+    <section class="projects-hero">
+        <div class="projects-3d-bg" id="projects-canvas"></div>
+        <div class="container">
+            <div class="projects-hero-content">
+                <h1 class="page-title">
+                    <span class="line">My Projects</span>
+                </h1>
+                <p class="page-subtitle">Showcasing my technical skills through real-world applications</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Filters -->
+    <section class="project-filters">
+        <div class="container">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">
+                    <i class="fas fa-th"></i>
+                    <span>All Projects</span>
+                </button>
+                <button class="filter-btn" data-filter="web">
+                    <i class="fas fa-globe"></i>
+                    <span>Web Development</span>
+                </button>
+                <button class="filter-btn" data-filter="ai">
+                    <i class="fas fa-brain"></i>
+                    <span>AI/ML</span>
+                </button>
+                <button class="filter-btn" data-filter="fullstack">
+                    <i class="fas fa-layer-group"></i>
+                    <span>Full Stack</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Gallery -->
+    <section class="projects-gallery">
+        <div class="container">
+            <div class="projects-grid" id="projects-grid">
+                
+                <!-- Project 1: Connect 4 AI -->
+                <div class="project-card" data-category="ai" data-tilt id="connect4">
+                    <div class="project-image">
+                        <img src="../assets/images/project-placeholder.svg" alt="Connect 4 AI">
+                        <div class="project-overlay">
+                            <div class="overlay-content">
+                                <h3>Connect 4 AI Game</h3>
+                                <p>AI-powered game with advanced algorithms</p>
+                                <div class="project-links">
+                                    <a href="https://github.com/NihalReddy14/Connect4-Game" target="_blank" class="project-link">
+                                        <i class="fab fa-github"></i>
+                                        <span>View Code</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3>Connect 4 Game with AI</h3>
+                            <span class="project-date">March 2024</span>
+                        </div>
+                        <p class="project-description">
+                            Developed an intelligent Connect 4 game featuring AI opponents powered by Minimax algorithm 
+                            with Alpha-Beta pruning. The game includes multiple difficulty levels and achieves optimal 
+                            move selection through advanced game tree search strategies.
+                        </p>
+                        <div class="project-features">
+                            <h4>Key Features:</h4>
+                            <ul>
+                                <li><i class="fas fa-check"></i> Minimax algorithm with Alpha-Beta pruning</li>
+                                <li><i class="fas fa-check"></i> Multiple difficulty levels</li>
+                                <li><i class="fas fa-check"></i> 25% improvement in winning probability</li>
+                                <li><i class="fas fa-check"></i> Enhanced gameplay responsiveness (30ms per turn)</li>
+                            </ul>
+                        </div>
+                        <div class="project-tech">
+                            <h4>Technologies:</h4>
+                            <div class="tech-tags">
+                                <span>Python</span>
+                                <span>AI/ML</span>
+                                <span>Game Theory</span>
+                                <span>Algorithms</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: Survey Application -->
+                <div class="project-card" data-category="fullstack web" data-tilt id="survey">
+                    <div class="project-image">
+                        <img src="../assets/images/project-placeholder.svg" alt="Survey Application">
+                        <div class="project-overlay">
+                            <div class="overlay-content">
+                                <h3>Fullstack Survey App</h3>
+                                <p>Modern web application with Angular & Spring Boot</p>
+                                <div class="project-links">
+                                    <a href="https://github.com/NihalReddy14/Survey-Page-GMU" target="_blank" class="project-link">
+                                        <i class="fab fa-github"></i>
+                                        <span>View Code</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3>Student Survey Web Application</h3>
+                            <span class="project-date">November 2023</span>
+                        </div>
+                        <p class="project-description">
+                            Engineered a comprehensive fullstack survey system for George Mason University using 
+                            Angular 17 and Spring Boot 3. The application handles survey creation, submission, 
+                            and data analysis with a modern, responsive interface.
+                        </p>
+                        <div class="project-features">
+                            <h4>Key Features:</h4>
+                            <ul>
+                                <li><i class="fas fa-check"></i> RESTful API architecture</li>
+                                <li><i class="fas fa-check"></i> Real-time form validation</li>
+                                <li><i class="fas fa-check"></i> H2 database integration</li>
+                                <li><i class="fas fa-check"></i> Sub-100ms API response time</li>
+                            </ul>
+                        </div>
+                        <div class="project-tech">
+                            <h4>Technologies:</h4>
+                            <div class="tech-tags">
+                                <span>Angular 17</span>
+                                <span>TypeScript</span>
+                                <span>Spring Boot</span>
+                                <span>Java</span>
+                                <span>REST APIs</span>
+                                <span>H2 Database</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3: University Management -->
+                <div class="project-card" data-category="web fullstack" data-tilt id="university">
+                    <div class="project-image">
+                        <img src="../assets/images/project-placeholder.svg" alt="University Management">
+                        <div class="project-overlay">
+                            <div class="overlay-content">
+                                <h3>University Management</h3>
+                                <p>Comprehensive system for 3000+ students</p>
+                                <div class="project-links">
+                                    <a href="https://github.com/NihalReddy14" target="_blank" class="project-link">
+                                        <i class="fab fa-github"></i>
+                                        <span>View Code</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3>University Management System</h3>
+                            <span class="project-date">April 2023</span>
+                        </div>
+                        <p class="project-description">
+                            Pioneered a comprehensive web-based university management system designed to organize 
+                            and maintain records for over 3000 students. The system streamlines administrative 
+                            tasks and provides an intuitive interface for data management.
+                        </p>
+                        <div class="project-features">
+                            <h4>Key Features:</h4>
+                            <ul>
+                                <li><i class="fas fa-check"></i> Student record management</li>
+                                <li><i class="fas fa-check"></i> Course enrollment system</li>
+                                <li><i class="fas fa-check"></i> Grade tracking and reporting</li>
+                                <li><i class="fas fa-check"></i> Intuitive admin dashboard</li>
+                            </ul>
+                        </div>
+                        <div class="project-tech">
+                            <h4>Technologies:</h4>
+                            <div class="tech-tags">
+                                <span>JavaScript</span>
+                                <span>HTML5</span>
+                                <span>CSS3</span>
+                                <span>MySQL</span>
+                                <span>Node.js</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4: Adult Income Prediction -->
+                <div class="project-card" data-category="ai" data-tilt>
+                    <div class="project-image">
+                        <img src="../assets/images/project-placeholder.svg" alt="Income Prediction">
+                        <div class="project-overlay">
+                            <div class="overlay-content">
+                                <h3>Income Prediction ML</h3>
+                                <p>Machine learning model using census data</p>
+                                <div class="project-links">
+                                    <a href="https://github.com/NihalReddy14/Adult-Income-Prediction-Using-Census-Data" target="_blank" class="project-link">
+                                        <i class="fab fa-github"></i>
+                                        <span>View Code</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3>Adult Income Prediction</h3>
+                            <span class="project-date">June 2025</span>
+                        </div>
+                        <p class="project-description">
+                            Developed a machine learning model to predict adult income levels using census data. 
+                            The project involves data preprocessing, feature engineering, and model optimization 
+                            to achieve high prediction accuracy.
+                        </p>
+                        <div class="project-features">
+                            <h4>Key Features:</h4>
+                            <ul>
+                                <li><i class="fas fa-check"></i> Data preprocessing pipeline</li>
+                                <li><i class="fas fa-check"></i> Feature engineering and selection</li>
+                                <li><i class="fas fa-check"></i> Multiple ML algorithm comparison</li>
+                                <li><i class="fas fa-check"></i> Model performance optimization</li>
+                            </ul>
+                        </div>
+                        <div class="project-tech">
+                            <h4>Technologies:</h4>
+                            <div class="tech-tags">
+                                <span>Python</span>
+                                <span>Scikit-learn</span>
+                                <span>Pandas</span>
+                                <span>NumPy</span>
+                                <span>Machine Learning</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5: Portfolio Website -->
+                <div class="project-card" data-category="web" data-tilt>
+                    <div class="project-image">
+                        <img src="../assets/images/project-placeholder.svg" alt="Portfolio">
+                        <div class="project-overlay">
+                            <div class="overlay-content">
+                                <h3>3D Portfolio Website</h3>
+                                <p>Modern portfolio with 3D animations</p>
+                                <div class="project-links">
+                                    <a href="https://github.com/NihalReddy14/Portfolio" target="_blank" class="project-link">
+                                        <i class="fab fa-github"></i>
+                                        <span>View Code</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3>Modern Portfolio Website</h3>
+                            <span class="project-date">July 2025</span>
+                        </div>
+                        <p class="project-description">
+                            Designed and developed a cutting-edge portfolio website featuring 3D animations, 
+                            interactive elements, and a modern user interface. The site showcases my projects 
+                            and skills with an emphasis on user experience and visual appeal.
+                        </p>
+                        <div class="project-features">
+                            <h4>Key Features:</h4>
+                            <ul>
+                                <li><i class="fas fa-check"></i> 3D animations with Three.js</li>
+                                <li><i class="fas fa-check"></i> Responsive multi-page design</li>
+                                <li><i class="fas fa-check"></i> Dark/light theme toggle</li>
+                                <li><i class="fas fa-check"></i> GSAP scroll animations</li>
+                            </ul>
+                        </div>
+                        <div class="project-tech">
+                            <h4>Technologies:</h4>
+                            <div class="tech-tags">
+                                <span>HTML5</span>
+                                <span>CSS3</span>
+                                <span>JavaScript</span>
+                                <span>Three.js</span>
+                                <span>GSAP</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- More Projects Coming Soon -->
+                <div class="project-card coming-soon" data-category="all">
+                    <div class="coming-soon-content">
+                        <i class="fas fa-rocket"></i>
+                        <h3>More Projects Coming Soon</h3>
+                        <p>Currently working on exciting new projects that will be added here</p>
+                        <a href="/pages/contact.html" class="btn btn-primary">
+                            <i class="fas fa-envelope"></i>
+                            <span>Get Updates</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GitHub Stats -->
+    <section class="github-stats">
+        <div class="container">
+            <h2 class="section-title">
+                <span>GitHub Activity</span>
+            </h2>
+            <div class="stats-grid">
+                <div class="stat-card" data-tilt>
+                    <div class="stat-icon">
+                        <i class="fas fa-code-branch"></i>
+                    </div>
+                    <h3>Repositories</h3>
+                    <p class="stat-number">20+</p>
+                </div>
+                <div class="stat-card" data-tilt>
+                    <div class="stat-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>Stars Earned</h3>
+                    <p class="stat-number">50+</p>
+                </div>
+                <div class="stat-card" data-tilt>
+                    <div class="stat-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Contributions</h3>
+                    <p class="stat-number">500+</p>
+                </div>
+                <div class="stat-card" data-tilt>
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Followers</h3>
+                    <p class="stat-number">100+</p>
+                </div>
+            </div>
+            <div class="github-link">
+                <a href="https://github.com/NihalReddy14" target="_blank" class="btn btn-secondary">
+                    <i class="fab fa-github"></i>
+                    <span>View GitHub Profile</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="projects-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Have a Project in Mind?</h2>
+                <p>Let's collaborate and build something amazing together</p>
+                <div class="cta-buttons">
+                    <a href="/pages/contact.html" class="btn btn-light">
+                        <i class="fas fa-comments"></i>
+                        <span>Discuss Project</span>
+                    </a>
+                    <a href="mailto:nihalcheruku@gmail.com" class="btn btn-outline">
+                        <i class="fas fa-envelope"></i>
+                        <span>Email Me</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>Nihal Reddy</h3>
+                    <p>Software Engineer & AI-Native Developer</p>
+                </div>
+                <div class="footer-links">
+                    <a href="https://github.com/NihalReddy14" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/nihalcheruku" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:nihalcheruku@gmail.com"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Nihal Reddy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../assets/js/projects-3d.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+</body>
+</html>
