@@ -1,280 +1,356 @@
-// 3D Communication Network for Contact Page
-let scene, camera, renderer;
-let networkGroup;
-let nodes = [];
-let connections = [];
+// 3D Scene for Contact Page - Communication Network Theme
+let contactScene, contactCamera, contactRenderer;
+let networkNodes = [], connections = [], messageParticles = [];
+let contactMouseX = 0, contactMouseY = 0;
 
 function initContact3D() {
     const container = document.getElementById('contact-canvas');
     if (!container) return;
 
     // Scene setup
-    scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x000000, 0.002);
+    contactScene = new THREE.Scene();
 
     // Camera setup
-    camera = new THREE.PerspectiveCamera(75, window.innerWidth / 400, 1, 1000);
-    camera.position.set(0, 0, 50);
+    contactCamera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
+    contactCamera.position.set(0, 0, 60);
 
     // Renderer setup
-    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(window.innerWidth, 400);
-    renderer.setClearColor(0x000000, 0);
-    container.appendChild(renderer.domElement);
+    contactRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    contactRenderer.setPixelRatio(window.devicePixelRatio);
+    contactRenderer.setSize(window.innerWidth, window.innerHeight);
+    contactRenderer.setClearColor(0x000000, 0);
+    container.appendChild(contactRenderer.domElement);
 
-    // Create communication network
-    createCommunicationNetwork();
+    // Create network nodes
+    createNetworkNodes();
+
+    // Create connections
+    createConnections();
+
+    // Create message particles
+    createMessageParticles();
 
     // Lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-    scene.add(ambientLight);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    contactScene.add(ambientLight);
 
-    const pointLight = new THREE.PointLight(0x6366f1, 1);
-    pointLight.position.set(20, 20, 20);
-    scene.add(pointLight);
+    const pointLight1 = new THREE.PointLight(0x6366f1, 2);
+    pointLight1.position.set(20, 20, 20);
+    contactScene.add(pointLight1);
 
-    const pointLight2 = new THREE.PointLight(0xec4899, 1);
+    const pointLight2 = new THREE.PointLight(0xec4899, 2);
     pointLight2.position.set(-20, -20, 20);
-    scene.add(pointLight2);
+    contactScene.add(pointLight2);
 
-    // Handle resize
+    // Mouse interaction
+    document.addEventListener('mousemove', onContactMouseMove);
     window.addEventListener('resize', onContactResize);
 
     // Start animation
     animateContact();
 }
 
-function createCommunicationNetwork() {
-    networkGroup = new THREE.Group();
-
-    // Create central node (user)
-    const centralGeometry = new THREE.SphereGeometry(4, 32, 32);
-    const centralMaterial = new THREE.MeshPhongMaterial({
-        color: 0xec4899,
-        emissive: 0xec4899,
-        emissiveIntensity: 0.5,
-        shininess: 100
+function createNetworkNodes() {
+    // Central communication hub
+    const hubGeometry = new THREE.IcosahedronGeometry(4, 2);
+    const hubMaterial = new THREE.MeshPhongMaterial({
+        color: 0x6366f1,
+        emissive: 0x6366f1,
+        emissiveIntensity: 0.3,
+        transparent: true,
+        opacity: 0.9
     });
-    const centralNode = new THREE.Mesh(centralGeometry, centralMaterial);
-    centralNode.position.set(0, 0, 0);
-    networkGroup.add(centralNode);
+    const hub = new THREE.Mesh(hubGeometry, hubMaterial);
+    hub.userData = { isHub: true, pulseSpeed: 0.02 };
+    networkNodes.push(hub);
+    contactScene.add(hub);
 
-    // Create outer ring
-    const ringGeometry = new THREE.TorusGeometry(8, 0.3, 16, 100);
-    const ringMaterial = new THREE.MeshPhongMaterial({
-        color: 0xec4899,
-        opacity: 0.6,
-        transparent: true
-    });
-    const ring = new THREE.Mesh(ringGeometry, ringMaterial);
-    networkGroup.add(ring);
-
-    // Create communication nodes
-    const nodeTypes = [
-        { icon: '✉', color: 0x6366f1, size: 2.5 },  // Email
-        { icon: '📱', color: 0x14b8a6, size: 2.5 },  // Phone
-        { icon: '💬', color: 0xf59e0b, size: 2.5 },  // Chat
-        { icon: '🌐', color: 0x8b5cf6, size: 2.5 },  // Web
-        { icon: '👥', color: 0x22c55e, size: 2.5 },  // Social
-        { icon: '📅', color: 0xef4444, size: 2.5 }   // Calendar
+    // Surrounding nodes (representing different contact methods)
+    const nodeData = [
+        { icon: 'email', color: 0xec4899, angle: 0 },
+        { icon: 'linkedin', color: 0x0077b5, angle: Math.PI / 3 },
+        { icon: 'github', color: 0x333333, angle: 2 * Math.PI / 3 },
+        { icon: 'phone', color: 0x14b8a6, angle: Math.PI },
+        { icon: 'location', color: 0xf59e0b, angle: 4 * Math.PI / 3 },
+        { icon: 'message', color: 0x8b5cf6, angle: 5 * Math.PI / 3 }
     ];
 
-    nodeTypes.forEach((type, index) => {
-        const angle = (index / nodeTypes.length) * Math.PI * 2;
-        const radius = 20;
+    nodeData.forEach((data, index) => {
+        const nodeGroup = new THREE.Group();
         
-        // Create node
-        const nodeGeometry = new THREE.SphereGeometry(type.size, 32, 32);
+        // Node sphere
+        const nodeGeometry = new THREE.SphereGeometry(2, 16, 16);
         const nodeMaterial = new THREE.MeshPhongMaterial({
-            color: type.color,
-            emissive: type.color,
-            emissiveIntensity: 0.3,
-            shininess: 100
+            color: data.color,
+            emissive: data.color,
+            emissiveIntensity: 0.2,
+            transparent: true,
+            opacity: 0.8
         });
         const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
+        nodeGroup.add(node);
         
-        node.position.set(
-            Math.cos(angle) * radius,
-            Math.sin(angle) * radius,
-            (Math.random() - 0.5) * 10
-        );
+        // Outer ring
+        const ringGeometry = new THREE.TorusGeometry(2.5, 0.1, 8, 32);
+        const ringMaterial = new THREE.MeshBasicMaterial({
+            color: 0xffffff,
+            transparent: true,
+            opacity: 0.5
+        });
+        const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+        ring.rotation.x = Math.PI / 2;
+        nodeGroup.add(ring);
         
-        nodes.push({
-            mesh: node,
-            angle: angle,
+        // Position in circle
+        const radius = 20;
+        nodeGroup.position.x = Math.cos(data.angle) * radius;
+        nodeGroup.position.y = Math.sin(data.angle) * radius;
+        nodeGroup.position.z = Math.sin(index) * 5;
+        
+        nodeGroup.userData = {
+            type: data.icon,
+            angle: data.angle,
             radius: radius,
-            originalZ: node.position.z,
-            speed: 0.001 + Math.random() * 0.002
-        });
+            orbitSpeed: 0.001 + Math.random() * 0.002,
+            rotationSpeed: 0.01 + Math.random() * 0.01
+        };
         
-        networkGroup.add(node);
-        
-        // Create connection to center
-        const connectionGeometry = new THREE.BufferGeometry().setFromPoints([
-            new THREE.Vector3(0, 0, 0),
-            node.position
-        ]);
-        const connectionMaterial = new THREE.LineBasicMaterial({
-            color: type.color,
-            opacity: 0.3,
-            transparent: true
-        });
-        const connection = new THREE.Line(connectionGeometry, connectionMaterial);
-        connections.push(connection);
-        networkGroup.add(connection);
+        networkNodes.push(nodeGroup);
+        contactScene.add(nodeGroup);
     });
-
-    // Add floating particles
-    createFloatingMessages();
-
-    scene.add(networkGroup);
 }
 
-function createFloatingMessages() {
-    const particleCount = 50;
-    const geometry = new THREE.BufferGeometry();
-    const positions = [];
-    const colors = [];
-    const sizes = [];
-
-    for (let i = 0; i < particleCount; i++) {
-        const angle = Math.random() * Math.PI * 2;
-        const radius = 10 + Math.random() * 25;
-        const height = (Math.random() - 0.5) * 30;
-
-        positions.push(
-            Math.cos(angle) * radius,
-            height,
-            Math.sin(angle) * radius
-        );
-
-        const color = new THREE.Color();
-        color.setHSL(0.6 + Math.random() * 0.4, 0.7, 0.6);
-        colors.push(color.r, color.g, color.b);
+function createConnections() {
+    // Create dynamic connections between hub and nodes
+    const lineMaterial = new THREE.LineBasicMaterial({
+        color: 0x6366f1,
+        transparent: true,
+        opacity: 0.3
+    });
+    
+    // Connect hub to each node
+    networkNodes.forEach((node, index) => {
+        if (index === 0) return; // Skip hub itself
         
-        sizes.push(Math.random() * 3 + 1);
+        const points = [];
+        points.push(new THREE.Vector3(0, 0, 0)); // Hub position
+        points.push(node.position.clone());
+        
+        const geometry = new THREE.BufferGeometry().setFromPoints(points);
+        const line = new THREE.Line(geometry, lineMaterial.clone());
+        
+        line.userData = {
+            startNode: 0,
+            endNode: index,
+            pulseOffset: Math.random() * Math.PI * 2
+        };
+        
+        connections.push(line);
+        contactScene.add(line);
+    });
+    
+    // Create some connections between nodes
+    for (let i = 1; i < networkNodes.length - 1; i++) {
+        if (Math.random() > 0.5) {
+            const points = [];
+            points.push(networkNodes[i].position.clone());
+            points.push(networkNodes[i + 1].position.clone());
+            
+            const geometry = new THREE.BufferGeometry().setFromPoints(points);
+            const line = new THREE.Line(geometry, lineMaterial.clone());
+            
+            line.userData = {
+                startNode: i,
+                endNode: i + 1,
+                pulseOffset: Math.random() * Math.PI * 2
+            };
+            
+            connections.push(line);
+            contactScene.add(line);
+        }
     }
+}
 
-    geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-    geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-    geometry.setAttribute('size', new THREE.Float32BufferAttribute(sizes, 1));
-
-    const material = new THREE.PointsMaterial({
-        size: 3,
+function createMessageParticles() {
+    // Create particles flowing along connections
+    const particleGeometry = new THREE.BufferGeometry();
+    const particleCount = 100;
+    const positions = new Float32Array(particleCount * 3);
+    const colors = new Float32Array(particleCount * 3);
+    const sizes = new Float32Array(particleCount);
+    
+    for (let i = 0; i < particleCount; i++) {
+        // Random position
+        positions[i * 3] = (Math.random() - 0.5) * 50;
+        positions[i * 3 + 1] = (Math.random() - 0.5) * 50;
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 20;
+        
+        // Color gradient
+        const color = new THREE.Color();
+        color.setHSL(0.6 + Math.random() * 0.3, 0.8, 0.6);
+        colors[i * 3] = color.r;
+        colors[i * 3 + 1] = color.g;
+        colors[i * 3 + 2] = color.b;
+        
+        sizes[i] = Math.random() * 2 + 1;
+    }
+    
+    particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    particleGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+    
+    const particleMaterial = new THREE.PointsMaterial({
+        size: 2,
         vertexColors: true,
-        blending: THREE.AdditiveBlending,
         transparent: true,
         opacity: 0.8,
+        blending: THREE.AdditiveBlending,
         sizeAttenuation: true
     });
+    
+    const particles = new THREE.Points(particleGeometry, particleMaterial);
+    particles.userData = {
+        targetNodes: Array(particleCount).fill(0).map(() => Math.floor(Math.random() * networkNodes.length)),
+        speeds: Array(particleCount).fill(0).map(() => 0.01 + Math.random() * 0.02)
+    };
+    
+    messageParticles.push(particles);
+    contactScene.add(particles);
+}
 
-    const particles = new THREE.Points(geometry, material);
-    networkGroup.add(particles);
+function onContactMouseMove(event) {
+    contactMouseX = (event.clientX / window.innerWidth) * 2 - 1;
+    contactMouseY = -(event.clientY / window.innerHeight) * 2 + 1;
 }
 
 function onContactResize() {
-    camera.aspect = window.innerWidth / 400;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, 400);
+    contactCamera.aspect = window.innerWidth / window.innerHeight;
+    contactCamera.updateProjectionMatrix();
+    contactRenderer.setSize(window.innerWidth, window.innerHeight);
 }
 
 function animateContact() {
     requestAnimationFrame(animateContact);
-
-    // Rotate network
-    networkGroup.rotation.y += 0.001;
-
-    // Animate nodes
-    nodes.forEach((node, index) => {
-        // Orbital motion
-        node.angle += node.speed;
-        node.mesh.position.x = Math.cos(node.angle) * node.radius;
-        node.mesh.position.y = Math.sin(node.angle) * node.radius;
+    
+    const time = Date.now() * 0.001;
+    
+    // Animate hub
+    const hub = networkNodes[0];
+    if (hub) {
+        // Pulse effect
+        const scale = 1 + Math.sin(time * 2) * 0.1;
+        hub.scale.setScalar(scale);
+        hub.rotation.y += 0.005;
+    }
+    
+    // Animate network nodes
+    networkNodes.forEach((node, index) => {
+        if (index === 0) return; // Skip hub
+        
+        const userData = node.userData;
+        
+        // Orbit around hub
+        userData.angle += userData.orbitSpeed;
+        node.position.x = Math.cos(userData.angle) * userData.radius;
+        node.position.y = Math.sin(userData.angle) * userData.radius;
+        
+        // Rotation
+        node.rotation.x += userData.rotationSpeed;
+        node.rotation.y += userData.rotationSpeed * 0.5;
         
         // Floating motion
-        node.mesh.position.z = node.originalZ + Math.sin(Date.now() * 0.001 + index) * 2;
+        node.position.z = Math.sin(time + index) * 5;
+    });
+    
+    // Update connections
+    connections.forEach((connection, index) => {
+        const startNode = networkNodes[connection.userData.startNode];
+        const endNode = networkNodes[connection.userData.endNode];
         
-        // Pulse effect
-        const scale = 1 + Math.sin(Date.now() * 0.002 + index) * 0.1;
-        node.mesh.scale.setScalar(scale);
-        
-        // Update connection
-        const connection = connections[index];
-        if (connection) {
-            const points = [
-                new THREE.Vector3(0, 0, 0),
-                node.mesh.position
-            ];
-            connection.geometry.setFromPoints(points);
+        if (startNode && endNode) {
+            const positions = connection.geometry.attributes.position.array;
+            positions[0] = startNode.position.x;
+            positions[1] = startNode.position.y;
+            positions[2] = startNode.position.z;
+            positions[3] = endNode.position.x;
+            positions[4] = endNode.position.y;
+            positions[5] = endNode.position.z;
+            connection.geometry.attributes.position.needsUpdate = true;
+            
+            // Pulse effect
+            const opacity = 0.2 + Math.sin(time * 3 + connection.userData.pulseOffset) * 0.2;
+            connection.material.opacity = Math.max(0.1, opacity);
         }
     });
-
-    renderer.render(scene, camera);
+    
+    // Animate message particles
+    messageParticles.forEach(system => {
+        const positions = system.geometry.attributes.position.array;
+        const targetNodes = system.userData.targetNodes;
+        const speeds = system.userData.speeds;
+        
+        for (let i = 0; i < positions.length / 3; i++) {
+            const targetNode = networkNodes[targetNodes[i]];
+            if (targetNode) {
+                const idx = i * 3;
+                
+                // Move towards target
+                const dx = targetNode.position.x - positions[idx];
+                const dy = targetNode.position.y - positions[idx + 1];
+                const dz = targetNode.position.z - positions[idx + 2];
+                
+                positions[idx] += dx * speeds[i];
+                positions[idx + 1] += dy * speeds[i];
+                positions[idx + 2] += dz * speeds[i];
+                
+                // Reset if close to target
+                const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+                if (distance < 2) {
+                    targetNodes[i] = Math.floor(Math.random() * networkNodes.length);
+                }
+            }
+        }
+        
+        system.geometry.attributes.position.needsUpdate = true;
+        system.rotation.z += 0.001;
+    });
+    
+    // Camera follows mouse
+    contactCamera.position.x += (contactMouseX * 15 - contactCamera.position.x) * 0.05;
+    contactCamera.position.y += (contactMouseY * 15 - contactCamera.position.y) * 0.05;
+    contactCamera.lookAt(contactScene.position);
+    
+    contactRenderer.render(contactScene, contactCamera);
 }
 
-// Initialize 3D scene
+// Initialize when DOM is loaded
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initContact3D);
 } else {
     initContact3D();
 }
 
-// Contact page specific functionality
+// GSAP Animations for Contact Page
 document.addEventListener('DOMContentLoaded', function() {
-    // Form handling
-    const contactForm = document.getElementById('contact-form');
-    const formStatus = document.getElementById('form-status');
-    
-    if (contactForm) {
-        contactForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            // Get form data
-            const formData = new FormData(contactForm);
-            const data = Object.fromEntries(formData);
-            
-            // Show loading state
-            const submitBtn = contactForm.querySelector('.btn-submit');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Sending...</span>';
-            submitBtn.disabled = true;
-            
-            // Simulate form submission (replace with actual API call)
-            try {
-                await new Promise(resolve => setTimeout(resolve, 2000));
-                
-                // Show success message
-                formStatus.className = 'form-status success';
-                formStatus.textContent = 'Message sent successfully! I\'ll get back to you soon.';
-                contactForm.reset();
-                
-                // Animate success
-                gsap.from(formStatus, {
-                    scale: 0,
-                    opacity: 0,
-                    duration: 0.4,
-                    ease: 'back.out(1.7)'
-                });
-            } catch (error) {
-                // Show error message
-                formStatus.className = 'form-status error';
-                formStatus.textContent = 'Something went wrong. Please try again.';
-            } finally {
-                // Reset button
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-            }
-        });
-    }
+    // Hero animations
+    gsap.timeline()
+        .from('.page-title', {
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            ease: 'power3.out'
+        })
+        .from('.page-subtitle', {
+            y: 30,
+            opacity: 0,
+            duration: 0.8,
+            ease: 'power3.out'
+        }, '-=0.5');
 
-    // GSAP Animations
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Animate form elements
-    gsap.from('.contact-form-section', {
+    // Contact form animation
+    gsap.from('.contact-form', {
         scrollTrigger: {
-            trigger: '.contact-form-section',
+            trigger: '.contact-form',
             start: 'top 80%',
             once: true
         },
@@ -283,66 +359,50 @@ document.addEventListener('DOMContentLoaded', function() {
         duration: 0.8
     });
 
-    gsap.from('.info-card, .availability-card', {
-        scrollTrigger: {
-            trigger: '.contact-info-section',
-            start: 'top 80%',
-            once: true
-        },
-        x: 50,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.2
-    });
-
-    // Animate FAQ items
-    gsap.utils.toArray('.faq-item').forEach((item, index) => {
-        gsap.from(item, {
+    // Contact info cards
+    gsap.utils.toArray('.contact-info').forEach((info, index) => {
+        gsap.from(info, {
             scrollTrigger: {
-                trigger: item,
+                trigger: info,
                 start: 'top 80%',
                 once: true
             },
-            y: 50,
+            x: 50,
             opacity: 0,
-            duration: 0.6,
+            duration: 0.8,
             delay: index * 0.1
         });
     });
 
-    // Form field animations
-    const formGroups = document.querySelectorAll('.form-group');
-    formGroups.forEach(group => {
-        const input = group.querySelector('input, textarea');
-        const icon = group.querySelector('.form-icon');
-        
-        if (input && icon) {
-            input.addEventListener('focus', () => {
-                gsap.to(icon, {
-                    scale: 1.2,
-                    duration: 0.3,
-                    ease: 'back.out(1.7)'
-                });
-            });
-            
-            input.addEventListener('blur', () => {
-                gsap.to(icon, {
-                    scale: 1,
-                    duration: 0.3
-                });
-            });
-        }
+    // Social links
+    gsap.utils.toArray('.social-link').forEach((link, index) => {
+        gsap.from(link, {
+            scrollTrigger: {
+                trigger: link,
+                start: 'top 85%',
+                once: true
+            },
+            scale: 0,
+            opacity: 0,
+            duration: 0.6,
+            delay: index * 0.1,
+            ease: 'back.out(1.7)'
+        });
     });
 
-    // Parallax effect
-    gsap.to('.contact-hero-content', {
-        scrollTrigger: {
-            trigger: '.contact-hero',
-            start: 'top top',
-            end: 'bottom top',
-            scrub: true
-        },
-        y: -100,
-        opacity: 0.5
+    // Form field animations
+    const formFields = document.querySelectorAll('.form-group');
+    formFields.forEach((field, index) => {
+        gsap.from(field, {
+            scrollTrigger: {
+                trigger: field,
+                start: 'top 85%',
+                once: true
+            },
+            y: 30,
+            opacity: 0,
+            duration: 0.6,
+            delay: index * 0.1
+        });
     });
 });

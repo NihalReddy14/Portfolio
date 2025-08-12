@@ -52,19 +52,64 @@
 
     <!-- Contact Hero -->
     <section class="contact-hero">
-        <div class="contact-3d-bg" id="contact-canvas"></div>
-        <div class="container">
-            <div class="contact-hero-content">
-                <h1 class="page-title">
-                    <span class="line">Get In Touch</span>
+        <div class="contact-canvas-container" id="contact-canvas"></div>
+        
+        <div class="contact-hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="line">
+                        <span class="word">Get In</span>
+                        <span class="word highlight">Touch</span>
+                    </span>
                 </h1>
-                <p class="page-subtitle">Let's discuss your next project or opportunity</p>
+                <h2 class="hero-subtitle">
+                    <span>Let's discuss your next project or opportunity</span>
+                </h2>
+                <p class="hero-description">
+                    Whether you have a project in mind or just want to connect, 
+                    I'd love to hear from you. Let's build something amazing together.
+                </p>
+                <div class="hero-cta">
+                    <a href="#contact-content" class="btn btn-primary">
+                        <span>Send Message</span>
+                        <i class="fas fa-arrow-down"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/nihalcheruku" target="_blank" class="btn btn-secondary">
+                        <span>Connect on LinkedIn</span>
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="contact-methods">
+                    <div class="method-card" data-tilt>
+                        <i class="fas fa-envelope"></i>
+                        <h3>Email</h3>
+                        <p>nihalcheruku@gmail.com</p>
+                    </div>
+                    <div class="method-card" data-tilt>
+                        <i class="fab fa-linkedin"></i>
+                        <h3>LinkedIn</h3>
+                        <p>/in/nihalcheruku</p>
+                    </div>
+                    <div class="method-card" data-tilt>
+                        <i class="fab fa-github"></i>
+                        <h3>GitHub</h3>
+                        <p>@NihalReddy14</p>
+                    </div>
+                    <div class="method-card" data-tilt>
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h3>Location</h3>
+                        <p>Fairfax, VA</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Contact Content -->
-    <section class="contact-content">
+    <section class="contact-content" id="contact-content">
         <div class="container">
             <div class="contact-grid">
                 <!-- Contact Form -->
@@ -270,6 +315,7 @@
     </footer>
 
     <!-- Scripts -->
+    <script src="../assets/js/universal-3d.js"></script>
     <script src="../assets/js/contact-3d.js"></script>
     <script src="../assets/js/main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>

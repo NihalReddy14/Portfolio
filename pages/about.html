@@ -52,27 +52,72 @@
 
     <!-- About Hero Section -->
     <section class="about-hero">
-        <div class="about-hero-bg" id="about-canvas"></div>
-        <div class="container">
-            <div class="about-hero-content">
-                <h1 class="page-title">
-                    <span class="line">About Me</span>
+        <div class="about-canvas-container" id="about-canvas"></div>
+        
+        <div class="about-hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="line">
+                        <span class="word">About</span>
+                        <span class="word highlight">Me</span>
+                    </span>
                 </h1>
-                <p class="page-subtitle">Passionate Software Engineer & AI-Native Developer</p>
+                <h2 class="hero-subtitle">
+                    <span>Passionate Software Engineer & AI-Native Developer</span>
+                </h2>
+                <p class="hero-description">
+                    Master's graduate in Computer Science from George Mason University, 
+                    specializing in full-stack development, cloud architecture, and AI-first methodologies.
+                </p>
+                <div class="hero-cta">
+                    <a href="#about-content" class="btn btn-primary">
+                        <span>Learn More</span>
+                        <i class="fas fa-arrow-down"></i>
+                    </a>
+                    <a href="/pages/contact.html" class="btn btn-secondary">
+                        <span>Get In Touch</span>
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="about-stats">
+                    <div class="stat-card" data-tilt>
+                        <i class="fas fa-graduation-cap"></i>
+                        <h3>MS CS</h3>
+                        <p>May 2025</p>
+                    </div>
+                    <div class="stat-card" data-tilt>
+                        <i class="fas fa-briefcase"></i>
+                        <h3>AI Developer</h3>
+                        <p>Chinchilla AI</p>
+                    </div>
+                    <div class="stat-card" data-tilt>
+                        <i class="fas fa-certificate"></i>
+                        <h3>AWS Certified</h3>
+                        <p>Cloud & AI-ML</p>
+                    </div>
+                    <div class="stat-card" data-tilt>
+                        <i class="fas fa-code-branch"></i>
+                        <h3>10+ Projects</h3>
+                        <p>Completed</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- About Content -->
-    <section class="about-content">
+    <section class="about-content" id="about-content">
         <div class="container">
             <div class="about-grid">
                 <div class="about-text">
                     <div class="about-intro">
                         <h2>Hello! I'm Nihal Reddy</h2>
                         <p class="lead">
-                            A passionate software engineer currently pursuing my Master's in Computer Science 
-                            at George Mason University, with an expected graduation in May 2025.
+                            A passionate software engineer who completed my Master's in Computer Science 
+                            at George Mason University in May 2025.
                         </p>
                         <p>
                             I specialize in crafting exceptional digital experiences through full-stack development, 
@@ -149,7 +194,7 @@
                         <ul>
                             <li>
                                 <i class="fas fa-graduation-cap"></i>
-                                <span>MS in Computer Science (Expected May 2025)</span>
+                                <span>MS in Computer Science (Completed May 2025)</span>
                             </li>
                             <li>
                                 <i class="fas fa-briefcase"></i>
@@ -184,7 +229,7 @@
                     <div class="timeline-content">
                         <h3>Master of Science in Computer Science</h3>
                         <h4>George Mason University</h4>
-                        <p class="timeline-date">August 2023 - May 2025 (Expected)</p>
+                        <p class="timeline-date">August 2023 - May 2025</p>
                         <p class="timeline-location">Fairfax, VA</p>
                         <div class="coursework">
                             <h5>Relevant Coursework:</h5>
@@ -283,6 +328,7 @@
     </footer>
 
     <!-- Scripts -->
+    <script src="../assets/js/universal-3d.js"></script>
     <script src="../assets/js/about-3d.js"></script>
     <script src="../assets/js/main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>

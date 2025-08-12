@@ -1,240 +1,405 @@
-// 3D Visualization for Skills Page
-let scene, camera, renderer, raycaster, mouse;
-let skillSpheres = [];
-let rotationGroup;
+// 3D Scene for Skills Page - Technology Matrix Theme
+let skillsScene, skillsCamera, skillsRenderer;
+let techCube, skillSpheres = [], circuitLines = [];
+let skillsMouseX = 0, skillsMouseY = 0;
 
 function initSkills3D() {
     const container = document.getElementById('skills-canvas');
     if (!container) return;
 
     // Scene setup
-    scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x000000, 0.001);
+    skillsScene = new THREE.Scene();
 
     // Camera setup
-    camera = new THREE.PerspectiveCamera(75, window.innerWidth / 400, 1, 1000);
-    camera.position.z = 50;
+    skillsCamera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
+    skillsCamera.position.set(0, 10, 50);
+    skillsCamera.lookAt(0, 0, 0);
 
     // Renderer setup
-    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(window.innerWidth, 400);
-    renderer.setClearColor(0x000000, 0);
-    container.appendChild(renderer.domElement);
+    skillsRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    skillsRenderer.setPixelRatio(window.devicePixelRatio);
+    skillsRenderer.setSize(window.innerWidth, window.innerHeight);
+    skillsRenderer.setClearColor(0x000000, 0);
+    container.appendChild(skillsRenderer.domElement);
 
-    // Raycaster for interactions
-    raycaster = new THREE.Raycaster();
-    mouse = new THREE.Vector2();
+    // Create central tech cube
+    createTechCube();
 
-    // Create skill network
-    createSkillNetwork();
+    // Create floating skill spheres
+    createSkillSpheres();
+
+    // Create circuit board lines
+    createCircuitBoard();
 
     // Lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-    scene.add(ambientLight);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    skillsScene.add(ambientLight);
 
-    const pointLight1 = new THREE.PointLight(0x6366f1, 1);
-    pointLight1.position.set(50, 50, 50);
-    scene.add(pointLight1);
+    const spotLight1 = new THREE.SpotLight(0x6366f1, 2);
+    spotLight1.position.set(20, 20, 20);
+    spotLight1.angle = Math.PI / 4;
+    spotLight1.penumbra = 0.5;
+    skillsScene.add(spotLight1);
 
-    const pointLight2 = new THREE.PointLight(0xec4899, 1);
-    pointLight2.position.set(-50, -50, 50);
-    scene.add(pointLight2);
+    const spotLight2 = new THREE.SpotLight(0x14b8a6, 1.5);
+    spotLight2.position.set(-20, 20, -20);
+    spotLight2.angle = Math.PI / 4;
+    spotLight2.penumbra = 0.5;
+    skillsScene.add(spotLight2);
 
-    // Event listeners
+    // Mouse interaction
+    document.addEventListener('mousemove', onSkillsMouseMove);
     window.addEventListener('resize', onSkillsResize);
-    container.addEventListener('mousemove', onSkillsMouseMove);
 
     // Start animation
     animateSkills();
 }
 
-function createSkillNetwork() {
-    rotationGroup = new THREE.Group();
+function createTechCube() {
+    const cubeGroup = new THREE.Group();
     
-    const categories = {
-        languages: { color: 0x6366f1, skills: ['JS', 'TS', 'Python', 'Java', 'C++'] },
-        frontend: { color: 0xec4899, skills: ['React', 'Next', 'Angular', 'CSS'] },
-        backend: { color: 0x14b8a6, skills: ['Node', 'Spring', 'GraphQL'] },
-        cloud: { color: 0xf59e0b, skills: ['AWS', 'Docker', 'CI/CD'] },
-        tools: { color: 0x8b5cf6, skills: ['Git', 'MongoDB', 'SQL'] }
-    };
-
-    let nodeIndex = 0;
-    const totalNodes = Object.values(categories).reduce((sum, cat) => sum + cat.skills.length, 0);
+    // Main cube frame - smaller
+    const frameGeometry = new THREE.BoxGeometry(12, 12, 12);
+    const frameMaterial = new THREE.MeshBasicMaterial({
+        color: 0x6366f1,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.4
+    });
+    const frame = new THREE.Mesh(frameGeometry, frameMaterial);
+    cubeGroup.add(frame);
     
-    Object.entries(categories).forEach(([category, data]) => {
-        data.skills.forEach((skill, index) => {
-            // Create sphere
-            const geometry = new THREE.SphereGeometry(2, 32, 32);
-            const material = new THREE.MeshPhongMaterial({
-                color: data.color,
-                emissive: data.color,
-                emissiveIntensity: 0.2,
-                shininess: 100
-            });
-            const sphere = new THREE.Mesh(geometry, material);
-            
-            // Position in 3D space
-            const angle = (nodeIndex / totalNodes) * Math.PI * 2;
-            const radius = 20 + Math.random() * 10;
-            const y = (Math.random() - 0.5) * 30;
-            
-            sphere.position.set(
-                Math.cos(angle) * radius,
-                y,
-                Math.sin(angle) * radius
-            );
-            
-            sphere.userData = { skill, category, originalColor: data.color };
-            skillSpheres.push(sphere);
-            rotationGroup.add(sphere);
-            
-            // Create connections
-            if (index > 0) {
-                const prevSphere = skillSpheres[skillSpheres.length - 2];
-                const lineGeometry = new THREE.BufferGeometry().setFromPoints([
-                    sphere.position,
-                    prevSphere.position
-                ]);
-                const lineMaterial = new THREE.LineBasicMaterial({
-                    color: data.color,
-                    opacity: 0.3,
-                    transparent: true
-                });
-                const line = new THREE.Line(lineGeometry, lineMaterial);
-                rotationGroup.add(line);
-            }
-            
-            nodeIndex++;
-        });
+    // Inner rotating cube - smaller
+    const innerGeometry = new THREE.IcosahedronGeometry(6, 2);
+    const innerMaterial = new THREE.MeshPhongMaterial({
+        color: 0x14b8a6,
+        emissive: 0x14b8a6,
+        emissiveIntensity: 0.3,
+        flatShading: true,
+        transparent: true,
+        opacity: 0.6,
+        shininess: 100
+    });
+    const inner = new THREE.Mesh(innerGeometry, innerMaterial);
+    cubeGroup.add(inner);
+    
+    // Add "SKILLS" text in center
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    canvas.width = 256;
+    canvas.height = 64;
+    
+    context.fillStyle = 'rgba(255, 255, 255, 1)';
+    context.font = 'Bold 48px Arial';
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
+    context.fillText('SKILLS', 128, 32);
+    
+    const texture = new THREE.CanvasTexture(canvas);
+    const spriteMaterial = new THREE.SpriteMaterial({ 
+        map: texture,
+        transparent: true,
+        opacity: 0.9
+    });
+    const sprite = new THREE.Sprite(spriteMaterial);
+    sprite.scale.set(8, 2, 1);
+    cubeGroup.add(sprite);
+    
+    // Data particles inside cube
+    const particleCount = 100;
+    const particlesGeometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(particleCount * 3);
+    
+    for (let i = 0; i < particleCount * 3; i += 3) {
+        positions[i] = (Math.random() - 0.5) * 15;
+        positions[i + 1] = (Math.random() - 0.5) * 15;
+        positions[i + 2] = (Math.random() - 0.5) * 15;
+    }
+    
+    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    
+    const particlesMaterial = new THREE.PointsMaterial({
+        color: 0xffffff,
+        size: 0.8,
+        transparent: true,
+        opacity: 0.6,
+        blending: THREE.AdditiveBlending
     });
     
-    scene.add(rotationGroup);
+    const particles = new THREE.Points(particlesGeometry, particlesMaterial);
+    cubeGroup.add(particles);
+    
+    techCube = cubeGroup;
+    skillsScene.add(techCube);
+}
+
+function createSkillSpheres() {
+    const skills = [
+        { name: 'JavaScript', color: 0xf7df1e, level: 0.9 },
+        { name: 'React', color: 0x61dafb, level: 0.85 },
+        { name: 'Node.js', color: 0x339933, level: 0.8 },
+        { name: 'Python', color: 0x3776ab, level: 0.75 },
+        { name: 'AWS', color: 0xff9900, level: 0.7 },
+        { name: 'Docker', color: 0x2496ed, level: 0.65 },
+        { name: 'TypeScript', color: 0x3178c6, level: 0.85 },
+        { name: 'MongoDB', color: 0x47a248, level: 0.7 },
+        { name: 'Next.js', color: 0x000000, level: 0.75 },
+        { name: 'GraphQL', color: 0xe10098, level: 0.65 },
+        { name: 'Redux', color: 0x764abc, level: 0.7 },
+        { name: 'Git', color: 0xf05032, level: 0.85 }
+    ];
+    
+    skills.forEach((skill, index) => {
+        const angle = (index / skills.length) * Math.PI * 2;
+        const radius = 25;
+        
+        // Skill sphere group
+        const sphereGroup = new THREE.Group();
+        
+        // Main sphere with better material - smaller size
+        const sphereGeometry = new THREE.SphereGeometry(2.5, 32, 32);
+        const sphereMaterial = new THREE.MeshPhongMaterial({
+            color: skill.color,
+            emissive: skill.color,
+            emissiveIntensity: 0.4,
+            transparent: true,
+            opacity: 0.8,
+            shininess: 100
+        });
+        const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        sphereGroup.add(sphere);
+        
+        
+        // Add inner core - smaller
+        const coreGeometry = new THREE.IcosahedronGeometry(1.5, 1);
+        const coreMaterial = new THREE.MeshBasicMaterial({
+            color: 0xffffff,
+            transparent: true,
+            opacity: 0.3,
+            wireframe: true
+        });
+        const core = new THREE.Mesh(coreGeometry, coreMaterial);
+        sphereGroup.add(core);
+        
+        // Add glow ring - smaller
+        const ringGeometry = new THREE.TorusGeometry(3, 0.2, 16, 100);
+        const ringMaterial = new THREE.MeshBasicMaterial({
+            color: 0xffffff,
+            transparent: true,
+            opacity: 0.4
+        });
+        const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+        ring.rotation.x = Math.PI / 2;
+        sphereGroup.add(ring);
+        
+        
+        // Position in space
+        sphereGroup.position.x = Math.cos(angle) * radius;
+        sphereGroup.position.z = Math.sin(angle) * radius;
+        sphereGroup.position.y = Math.sin(angle * 2) * 5;
+        
+        sphereGroup.userData = {
+            angle: angle,
+            radius: radius,
+            floatSpeed: 0.0005 + Math.random() * 0.0005,
+            rotationSpeed: 0.005 + Math.random() * 0.005,
+            skill: skill,
+            core: core
+        };
+        
+        skillSpheres.push(sphereGroup);
+        skillsScene.add(sphereGroup);
+    });
+}
+
+function createCircuitBoard() {
+    // Create a grid of circuit-like lines
+    const gridSize = 40;
+    const divisions = 10;
+    
+    // Grid helper
+    const gridHelper = new THREE.GridHelper(gridSize, divisions, 0x6366f1, 0x6366f1);
+    gridHelper.material.opacity = 0.1;
+    gridHelper.material.transparent = true;
+    gridHelper.position.y = -15;
+    skillsScene.add(gridHelper);
+    
+    // Circuit paths
+    const pathMaterial = new THREE.LineBasicMaterial({
+        color: 0x14b8a6,
+        transparent: true,
+        opacity: 0.3
+    });
+    
+    // Create random circuit paths
+    for (let i = 0; i < 5; i++) {
+        const points = [];
+        const startX = (Math.random() - 0.5) * gridSize;
+        const startZ = (Math.random() - 0.5) * gridSize;
+        
+        points.push(new THREE.Vector3(startX, -15, startZ));
+        
+        for (let j = 0; j < 3; j++) {
+            const x = (Math.random() - 0.5) * gridSize;
+            const z = (Math.random() - 0.5) * gridSize;
+            points.push(new THREE.Vector3(x, -15, z));
+        }
+        
+        const geometry = new THREE.BufferGeometry().setFromPoints(points);
+        const line = new THREE.Line(geometry, pathMaterial);
+        
+        line.userData = {
+            pulseOffset: Math.random() * Math.PI * 2
+        };
+        
+        circuitLines.push(line);
+        skillsScene.add(line);
+    }
 }
 
 function onSkillsMouseMove(event) {
-    const rect = renderer.domElement.getBoundingClientRect();
-    mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-    mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+    skillsMouseX = (event.clientX / window.innerWidth) * 2 - 1;
+    skillsMouseY = -(event.clientY / window.innerHeight) * 2 + 1;
 }
 
 function onSkillsResize() {
-    camera.aspect = window.innerWidth / 400;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, 400);
+    skillsCamera.aspect = window.innerWidth / window.innerHeight;
+    skillsCamera.updateProjectionMatrix();
+    skillsRenderer.setSize(window.innerWidth, window.innerHeight);
 }
 
 function animateSkills() {
     requestAnimationFrame(animateSkills);
     
-    // Rotate the entire group
-    rotationGroup.rotation.y += 0.002;
+    const time = Date.now() * 0.001;
     
-    // Float individual spheres
-    skillSpheres.forEach((sphere, index) => {
-        sphere.position.y += Math.sin(Date.now() * 0.001 + index) * 0.01;
-        sphere.rotation.x += 0.01;
-        sphere.rotation.y += 0.01;
-    });
-    
-    // Raycaster for hover effects
-    raycaster.setFromCamera(mouse, camera);
-    const intersects = raycaster.intersectObjects(skillSpheres);
-    
-    // Reset all spheres
-    skillSpheres.forEach(sphere => {
-        sphere.scale.set(1, 1, 1);
-        sphere.material.emissiveIntensity = 0.2;
-    });
-    
-    // Highlight hovered sphere
-    if (intersects.length > 0) {
-        const hoveredSphere = intersects[0].object;
-        hoveredSphere.scale.set(1.5, 1.5, 1.5);
-        hoveredSphere.material.emissiveIntensity = 0.5;
-        document.body.style.cursor = 'pointer';
-    } else {
-        document.body.style.cursor = 'default';
+    // Animate tech cube
+    if (techCube) {
+        techCube.rotation.x += 0.003;
+        techCube.rotation.y += 0.005;
+        
+        // Animate inner cube differently
+        techCube.children[1].rotation.x -= 0.01;
+        techCube.children[1].rotation.y += 0.015;
+        
+        // Animate particles
+        const positions = techCube.children[2].geometry.attributes.position.array;
+        for (let i = 0; i < positions.length; i += 3) {
+            positions[i + 1] = Math.sin(time + i) * 5;
+        }
+        techCube.children[2].geometry.attributes.position.needsUpdate = true;
     }
     
-    renderer.render(scene, camera);
+    // Animate skill spheres
+    skillSpheres.forEach((sphere, index) => {
+        const userData = sphere.userData;
+        
+        // Orbital motion around center
+        userData.angle += userData.floatSpeed;
+        sphere.position.x = Math.cos(userData.angle) * userData.radius;
+        sphere.position.z = Math.sin(userData.angle) * userData.radius;
+        sphere.position.y = Math.sin(userData.angle * 2) * 5 + Math.sin(time + index) * 2;
+        
+        // Sphere rotation
+        sphere.rotation.y += userData.rotationSpeed;
+        
+        // Rotate inner elements
+        if (userData.core) {
+            userData.core.rotation.x += 0.02;
+            userData.core.rotation.y += 0.01;
+        }
+        
+        // Pulse effect
+        const scale = 1 + Math.sin(time * 2 + index) * 0.05;
+        sphere.scale.setScalar(scale);
+    });
+    
+    // Animate circuit lines
+    circuitLines.forEach((line, index) => {
+        const opacity = 0.1 + Math.sin(time * 2 + line.userData.pulseOffset) * 0.2;
+        line.material.opacity = Math.max(0.1, opacity);
+    });
+    
+    // Camera follows mouse
+    skillsCamera.position.x += (skillsMouseX * 20 - skillsCamera.position.x) * 0.05;
+    skillsCamera.position.y = 10 + skillsMouseY * 10;
+    skillsCamera.lookAt(skillsScene.position);
+    
+    skillsRenderer.render(skillsScene, skillsCamera);
 }
 
-// Initialize 3D scene
+// Initialize when DOM is loaded
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initSkills3D);
 } else {
     initSkills3D();
 }
 
-// Skills page specific interactions
+// GSAP Animations for Skills Page
 document.addEventListener('DOMContentLoaded', function() {
-    // Category filtering
-    const categoryBtns = document.querySelectorAll('.category-btn');
-    const skillCards = document.querySelectorAll('.skill-card');
-    
-    categoryBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            // Update active button
-            categoryBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            
-            const category = btn.dataset.category;
-            
-            // Filter cards
-            skillCards.forEach((card, index) => {
-                card.style.setProperty('--index', index + 1);
-                
-                if (category === 'all' || card.dataset.category === category) {
-                    card.style.display = 'block';
-                    gsap.from(card, {
-                        scale: 0,
-                        opacity: 0,
-                        duration: 0.5,
-                        delay: index * 0.05,
-                        ease: 'back.out(1.7)'
-                    });
-                } else {
-                    gsap.to(card, {
-                        scale: 0,
-                        opacity: 0,
-                        duration: 0.3,
-                        onComplete: () => {
-                            card.style.display = 'none';
-                        }
-                    });
-                }
+    // Hero animations
+    gsap.timeline()
+        .from('.page-title', {
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            ease: 'power3.out'
+        })
+        .from('.page-subtitle', {
+            y: 30,
+            opacity: 0,
+            duration: 0.8,
+            ease: 'power3.out'
+        }, '-=0.5');
+
+    // Skill categories entrance
+    gsap.utils.toArray('.skill-category').forEach((category, index) => {
+        gsap.from(category, {
+            scrollTrigger: {
+                trigger: category,
+                start: 'top 80%',
+                once: true
+            },
+            y: 50,
+            opacity: 0,
+            duration: 0.8,
+            delay: index * 0.1
+        });
+    });
+
+    // Skill items
+    gsap.utils.toArray('.skill-item').forEach((item, index) => {
+        gsap.from(item, {
+            scrollTrigger: {
+                trigger: item,
+                start: 'top 85%',
+                once: true
+            },
+            x: -30,
+            opacity: 0,
+            duration: 0.6,
+            delay: (index % 3) * 0.1
+        });
+
+        // Animate skill bars
+        const skillBar = item.querySelector('.skill-progress');
+        if (skillBar) {
+            gsap.from(skillBar, {
+                scrollTrigger: {
+                    trigger: item,
+                    start: 'top 85%',
+                    once: true
+                },
+                scaleX: 0,
+                duration: 1,
+                delay: 0.3 + (index % 3) * 0.1,
+                ease: 'power2.out',
+                transformOrigin: 'left center'
             });
-        });
+        }
     });
 
-    // Animate skill bars on scroll
-    const observerOptions = {
-        threshold: 0.3,
-        rootMargin: '0px 0px -100px 0px'
-    };
-    
-    const skillObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const levelBar = entry.target.querySelector('.level-bar');
-                if (levelBar) {
-                    levelBar.style.animation = 'fillBar 1.5s ease-out forwards';
-                }
-                skillObserver.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-    
-    skillCards.forEach(card => {
-        skillObserver.observe(card);
-    });
-
-    // Create 3D skill chart
-    createSkillChart();
-
-    // GSAP ScrollTrigger animations
+    // Certifications
     gsap.utils.toArray('.cert-card').forEach((card, index) => {
         gsap.from(card, {
             scrollTrigger: {
@@ -242,12 +407,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 start: 'top 80%',
                 once: true
             },
-            x: index % 2 === 0 ? -50 : 50,
+            scale: 0,
             opacity: 0,
-            duration: 0.8
+            duration: 0.8,
+            delay: index * 0.2,
+            ease: 'back.out(1.7)'
         });
     });
 
+    // Learning cards
     gsap.utils.toArray('.learning-card').forEach((card, index) => {
         gsap.from(card, {
             scrollTrigger: {
@@ -258,78 +426,8 @@ document.addEventListener('DOMContentLoaded', function() {
             y: 50,
             opacity: 0,
             duration: 0.8,
-            delay: index * 0.1
+            delay: index * 0.15,
+            rotationX: -30
         });
     });
 });
-
-// Create 3D donut chart for skills distribution
-function createSkillChart() {
-    const chartContainer = document.getElementById('skill-chart');
-    if (!chartContainer) return;
-
-    const chartScene = new THREE.Scene();
-    const chartCamera = new THREE.PerspectiveCamera(75, 1, 1, 1000);
-    chartCamera.position.z = 30;
-
-    const chartRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    chartRenderer.setSize(400, 400);
-    chartRenderer.setClearColor(0x000000, 0);
-    chartContainer.appendChild(chartRenderer.domElement);
-
-    // Create donut segments
-    const segments = [
-        { color: 0x6366f1, angle: 72 },  // Languages
-        { color: 0xec4899, angle: 54 },  // Frontend
-        { color: 0x14b8a6, angle: 54 },  // Backend
-        { color: 0xf59e0b, angle: 72 },  // Cloud
-        { color: 0x8b5cf6, angle: 108 }  // Tools
-    ];
-
-    const chartGroup = new THREE.Group();
-    let startAngle = 0;
-
-    segments.forEach((segment, index) => {
-        const geometry = new THREE.RingGeometry(8, 12, 32, 1, startAngle, segment.angle * Math.PI / 180);
-        const material = new THREE.MeshPhongMaterial({
-            color: segment.color,
-            side: THREE.DoubleSide,
-            emissive: segment.color,
-            emissiveIntensity: 0.2
-        });
-        const mesh = new THREE.Mesh(geometry, material);
-        
-        // Add depth
-        const extrudeSettings = {
-            depth: 4,
-            bevelEnabled: true,
-            bevelSegments: 2,
-            steps: 2,
-            bevelSize: 0.5,
-            bevelThickness: 0.5
-        };
-        
-        chartGroup.add(mesh);
-        startAngle += segment.angle * Math.PI / 180;
-    });
-
-    chartScene.add(chartGroup);
-
-    // Add lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-    chartScene.add(ambientLight);
-
-    const pointLight = new THREE.PointLight(0xffffff, 1);
-    pointLight.position.set(10, 10, 20);
-    chartScene.add(pointLight);
-
-    // Animate chart
-    function animateChart() {
-        requestAnimationFrame(animateChart);
-        chartGroup.rotation.z += 0.005;
-        chartGroup.rotation.x = Math.sin(Date.now() * 0.001) * 0.1;
-        chartRenderer.render(chartScene, chartCamera);
-    }
-
-    animateChart();
-}

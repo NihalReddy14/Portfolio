@@ -52,19 +52,60 @@
 
     <!-- Experience Hero -->
     <section class="experience-hero">
-        <div class="experience-3d-bg" id="experience-canvas"></div>
-        <div class="container">
-            <div class="experience-hero-content">
-                <h1 class="page-title">
-                    <span class="line">Professional Experience</span>
+        <div class="experience-canvas-container" id="experience-canvas"></div>
+        
+        <div class="experience-hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="line">
+                        <span class="word">Professional</span>
+                        <span class="word highlight">Experience</span>
+                    </span>
                 </h1>
-                <p class="page-subtitle">My journey in software engineering</p>
+                <h2 class="hero-subtitle">
+                    <span>My journey in software engineering</span>
+                </h2>
+                <p class="hero-description">
+                    From AI-native development to cloud architecture, 
+                    I've worked on impactful projects across various domains.
+                </p>
+                <div class="hero-cta">
+                    <a href="#experience-timeline" class="btn btn-primary">
+                        <span>View Timeline</span>
+                        <i class="fas fa-arrow-down"></i>
+                    </a>
+                    <a href="/assets/resume.pdf" class="btn btn-secondary" target="_blank">
+                        <span>Download Resume</span>
+                        <i class="fas fa-download"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="experience-summary">
+                    <div class="summary-card" data-tilt>
+                        <h3>2+</h3>
+                        <p>Years Experience</p>
+                    </div>
+                    <div class="summary-card" data-tilt>
+                        <h3>5+</h3>
+                        <p>Projects Delivered</p>
+                    </div>
+                    <div class="summary-card" data-tilt>
+                        <h3>10x</h3>
+                        <p>Dev Acceleration</p>
+                    </div>
+                    <div class="summary-card" data-tilt>
+                        <h3>3000+</h3>
+                        <p>Users Impacted</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Experience Timeline -->
-    <section class="experience-timeline">
+    <section class="experience-timeline" id="experience-timeline">
         <div class="container">
             <div class="timeline-container">
                 <div class="timeline-line"></div>
@@ -133,56 +174,6 @@
                     </div>
                 </div>
 
-                <!-- Academic Projects -->
-                <div class="timeline-item" data-year="2024">
-                    <div class="timeline-marker">
-                        <div class="marker-dot"></div>
-                        <div class="marker-year">2024</div>
-                    </div>
-                    <div class="timeline-content" data-tilt>
-                        <div class="content-header">
-                            <h3>Graduate Research Assistant</h3>
-                            <h4>George Mason University</h4>
-                            <div class="content-meta">
-                                <span><i class="fas fa-calendar"></i> August 2023 - May 2024</span>
-                                <span><i class="fas fa-map-marker-alt"></i> Fairfax, VA</span>
-                            </div>
-                        </div>
-                        <div class="content-body">
-                            <p class="role-description">
-                                Conducted research in secure software design and network security, contributing to 
-                                academic papers and developing proof-of-concept implementations.
-                            </p>
-                            <div class="achievements">
-                                <h5>Key Projects:</h5>
-                                <ul>
-                                    <li>
-                                        <i class="fas fa-check-circle"></i>
-                                        Developed secure authentication systems using modern cryptographic protocols
-                                    </li>
-                                    <li>
-                                        <i class="fas fa-check-circle"></i>
-                                        Analyzed vulnerabilities in web applications and proposed mitigation strategies
-                                    </li>
-                                    <li>
-                                        <i class="fas fa-check-circle"></i>
-                                        Created automated testing frameworks for security assessment
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="tech-stack">
-                                <h5>Technologies Used:</h5>
-                                <div class="tech-tags">
-                                    <span>Python</span>
-                                    <span>Java</span>
-                                    <span>Security Protocols</span>
-                                    <span>Cryptography</span>
-                                    <span>Network Analysis</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 <!-- Academic Experience -->
                 <div class="timeline-item" data-year="2023">
@@ -374,6 +365,7 @@
     </footer>
 
     <!-- Scripts -->
+    <script src="../assets/js/universal-3d.js"></script>
     <script src="../assets/js/experience-3d.js"></script>
     <script src="../assets/js/main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>

@@ -1,192 +1,274 @@
-// 3D Gallery Visualization for Projects Page
-let scene, camera, renderer;
-let carouselGroup;
-let projectCards = [];
-let mouseX = 0;
-let targetRotation = 0;
+// 3D Scene for Projects Page - Creative Building Blocks Theme
+let projScene, projCamera, projRenderer;
+let buildingBlocks = [], codeParticles = [], creativeSparks = [];
+let projMouseX = 0, projMouseY = 0;
 
 function initProjects3D() {
     const container = document.getElementById('projects-canvas');
     if (!container) return;
 
     // Scene setup
-    scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x000000, 0.002);
+    projScene = new THREE.Scene();
 
     // Camera setup
-    camera = new THREE.PerspectiveCamera(75, window.innerWidth / 400, 1, 1000);
-    camera.position.set(0, 0, 40);
+    projCamera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
+    projCamera.position.set(25, 15, 40);
+    projCamera.lookAt(0, 0, 0);
 
     // Renderer setup
-    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(window.innerWidth, 400);
-    renderer.setClearColor(0x000000, 0);
-    container.appendChild(renderer.domElement);
+    projRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    projRenderer.setPixelRatio(window.devicePixelRatio);
+    projRenderer.setSize(window.innerWidth, window.innerHeight);
+    projRenderer.setClearColor(0x000000, 0);
+    container.appendChild(projRenderer.domElement);
 
-    // Create 3D carousel
-    create3DCarousel();
+    // Create building blocks
+    createBuildingBlocks();
+
+    // Create code particles
+    createCodeParticles();
+
+    // Create creative sparks
+    createCreativeSparks();
 
     // Lights
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-    scene.add(ambientLight);
+    projScene.add(ambientLight);
 
-    const spotLight = new THREE.SpotLight(0x6366f1, 1);
-    spotLight.position.set(0, 30, 30);
-    spotLight.castShadow = true;
-    scene.add(spotLight);
+    const spotLight1 = new THREE.SpotLight(0x6366f1, 2);
+    spotLight1.position.set(20, 30, 20);
+    spotLight1.castShadow = true;
+    projScene.add(spotLight1);
 
-    const spotLight2 = new THREE.SpotLight(0xec4899, 1);
-    spotLight2.position.set(0, -30, 30);
-    scene.add(spotLight2);
+    const spotLight2 = new THREE.SpotLight(0xec4899, 1.5);
+    spotLight2.position.set(-20, 20, -20);
+    projScene.add(spotLight2);
 
     // Mouse interaction
-    container.addEventListener('mousemove', onProjectsMouseMove);
-
-    // Handle resize
-    window.addEventListener('resize', onProjectsResize);
+    document.addEventListener('mousemove', onProjMouseMove);
+    window.addEventListener('resize', onProjResize);
 
     // Start animation
     animateProjects();
 }
 
-function create3DCarousel() {
-    carouselGroup = new THREE.Group();
+function createBuildingBlocks() {
+    const blockTypes = [
+        { geometry: new THREE.BoxGeometry(4, 4, 4), color: 0x6366f1 },
+        { geometry: new THREE.CylinderGeometry(2, 2, 4, 8), color: 0xec4899 },
+        { geometry: new THREE.OctahedronGeometry(3, 0), color: 0x14b8a6 },
+        { geometry: new THREE.TetrahedronGeometry(3, 0), color: 0xf59e0b },
+        { geometry: new THREE.IcosahedronGeometry(2.5, 0), color: 0x8b5cf6 }
+    ];
 
-    const cardCount = 6;
-    const radius = 20;
-
-    for (let i = 0; i < cardCount; i++) {
-        const angle = (i / cardCount) * Math.PI * 2;
+    // Create floating building blocks
+    for (let i = 0; i < 8; i++) {
+        const type = blockTypes[Math.floor(Math.random() * blockTypes.length)];
         
-        // Create card
-        const cardGeometry = new THREE.BoxGeometry(12, 8, 0.5);
-        const cardMaterial = new THREE.MeshPhongMaterial({
-            color: 0x1e293b,
-            emissive: 0x1e293b,
-            emissiveIntensity: 0.1,
-            shininess: 100
-        });
-        const card = new THREE.Mesh(cardGeometry, cardMaterial);
-
-        // Position card
-        card.position.x = Math.cos(angle) * radius;
-        card.position.z = Math.sin(angle) * radius;
-        card.rotation.y = -angle + Math.PI / 2;
-
-        // Add border
-        const borderGeometry = new THREE.EdgesGeometry(cardGeometry);
-        const borderMaterial = new THREE.LineBasicMaterial({ 
-            color: 0x6366f1,
-            linewidth: 2
-        });
-        const border = new THREE.LineSegments(borderGeometry, borderMaterial);
-        card.add(border);
-
-        // Add glowing effect
-        const glowGeometry = new THREE.BoxGeometry(12.5, 8.5, 0.6);
-        const glowMaterial = new THREE.MeshBasicMaterial({
-            color: 0x6366f1,
+        const material = new THREE.MeshPhongMaterial({
+            color: type.color,
+            emissive: type.color,
+            emissiveIntensity: 0.2,
             transparent: true,
-            opacity: 0.1
+            opacity: 0.8,
+            flatShading: true
         });
-        const glow = new THREE.Mesh(glowGeometry, glowMaterial);
-        card.add(glow);
-
-        // Add some text/icon representation
-        const iconGeometry = new THREE.IcosahedronGeometry(1, 0);
-        const iconMaterial = new THREE.MeshPhongMaterial({
-            color: 0xec4899,
-            emissive: 0xec4899,
-            emissiveIntensity: 0.5
-        });
-        const icon = new THREE.Mesh(iconGeometry, iconMaterial);
-        icon.position.z = 0.5;
-        card.add(icon);
-
-        projectCards.push({ card, icon, angle: angle });
-        carouselGroup.add(card);
+        
+        const block = new THREE.Mesh(type.geometry, material);
+        
+        // Add wireframe overlay
+        const wireframe = new THREE.Mesh(
+            type.geometry,
+            new THREE.MeshBasicMaterial({
+                color: 0xffffff,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.2
+            })
+        );
+        block.add(wireframe);
+        
+        // Random position
+        block.position.set(
+            (Math.random() - 0.5) * 40,
+            (Math.random() - 0.5) * 20,
+            (Math.random() - 0.5) * 30
+        );
+        
+        block.rotation.set(
+            Math.random() * Math.PI,
+            Math.random() * Math.PI,
+            Math.random() * Math.PI
+        );
+        
+        block.userData = {
+            originalY: block.position.y,
+            floatSpeed: 0.5 + Math.random() * 0.5,
+            rotationSpeed: {
+                x: 0.001 + Math.random() * 0.01,
+                y: 0.001 + Math.random() * 0.01,
+                z: 0.001 + Math.random() * 0.01
+            }
+        };
+        
+        buildingBlocks.push(block);
+        projScene.add(block);
     }
-
-    scene.add(carouselGroup);
-
-    // Add floating particles
-    createFloatingParticles();
 }
 
-function createFloatingParticles() {
-    const particleCount = 100;
+function createCodeParticles() {
+    // Create flowing code-like particles
+    const particleCount = 300;
     const geometry = new THREE.BufferGeometry();
-    const positions = [];
-    const colors = [];
-
+    const positions = new Float32Array(particleCount * 3);
+    const colors = new Float32Array(particleCount * 3);
+    
     for (let i = 0; i < particleCount; i++) {
-        const angle = Math.random() * Math.PI * 2;
-        const radius = 15 + Math.random() * 15;
-        const height = (Math.random() - 0.5) * 40;
-
-        positions.push(
-            Math.cos(angle) * radius,
-            height,
-            Math.sin(angle) * radius
-        );
-
+        positions[i * 3] = (Math.random() - 0.5) * 60;
+        positions[i * 3 + 1] = (Math.random() - 0.5) * 40;
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 60;
+        
         const color = new THREE.Color();
-        color.setHSL(0.6 + Math.random() * 0.4, 0.7, 0.5);
-        colors.push(color.r, color.g, color.b);
+        if (i % 3 === 0) {
+            color.set(0x6366f1); // Blue
+        } else if (i % 3 === 1) {
+            color.set(0xec4899); // Pink
+        } else {
+            color.set(0x14b8a6); // Teal
+        }
+        
+        colors[i * 3] = color.r;
+        colors[i * 3 + 1] = color.g;
+        colors[i * 3 + 2] = color.b;
     }
-
-    geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-    geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-
+    
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    
     const material = new THREE.PointsMaterial({
         size: 2,
         vertexColors: true,
-        blending: THREE.AdditiveBlending,
         transparent: true,
-        opacity: 0.6
+        opacity: 0.6,
+        blending: THREE.AdditiveBlending
     });
-
+    
     const particles = new THREE.Points(geometry, material);
-    carouselGroup.add(particles);
+    codeParticles.push(particles);
+    projScene.add(particles);
 }
 
-function onProjectsMouseMove(event) {
-    const rect = renderer.domElement.getBoundingClientRect();
-    mouseX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-    targetRotation = mouseX * Math.PI * 0.5;
+function createCreativeSparks() {
+    // Create spark connections between blocks
+    const sparkMaterial = new THREE.LineBasicMaterial({
+        color: 0xffffff,
+        transparent: true,
+        opacity: 0.2
+    });
+    
+    for (let i = 0; i < 10; i++) {
+        const points = [];
+        const startPoint = new THREE.Vector3(
+            (Math.random() - 0.5) * 40,
+            (Math.random() - 0.5) * 20,
+            (Math.random() - 0.5) * 30
+        );
+        
+        points.push(startPoint);
+        
+        // Create lightning-like path
+        for (let j = 0; j < 5; j++) {
+            const nextPoint = new THREE.Vector3(
+                startPoint.x + (Math.random() - 0.5) * 10,
+                startPoint.y + (Math.random() - 0.5) * 10,
+                startPoint.z + (Math.random() - 0.5) * 10
+            );
+            points.push(nextPoint);
+        }
+        
+        const geometry = new THREE.BufferGeometry().setFromPoints(points);
+        const spark = new THREE.Line(geometry, sparkMaterial);
+        
+        spark.userData = {
+            opacity: Math.random(),
+            fadeSpeed: 0.01 + Math.random() * 0.02
+        };
+        
+        creativeSparks.push(spark);
+        projScene.add(spark);
+    }
 }
 
-function onProjectsResize() {
-    camera.aspect = window.innerWidth / 400;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, 400);
+function onProjMouseMove(event) {
+    projMouseX = (event.clientX / window.innerWidth) * 2 - 1;
+    projMouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+}
+
+function onProjResize() {
+    projCamera.aspect = window.innerWidth / window.innerHeight;
+    projCamera.updateProjectionMatrix();
+    projRenderer.setSize(window.innerWidth, window.innerHeight);
 }
 
 function animateProjects() {
     requestAnimationFrame(animateProjects);
-
-    // Smooth carousel rotation
-    carouselGroup.rotation.y += (targetRotation - carouselGroup.rotation.y) * 0.05;
-
-    // Animate individual cards
-    projectCards.forEach((item, index) => {
-        // Float animation
-        item.card.position.y = Math.sin(Date.now() * 0.001 + index) * 0.5;
+    
+    const time = Date.now() * 0.001;
+    
+    // Animate building blocks
+    buildingBlocks.forEach((block, index) => {
+        const userData = block.userData;
         
-        // Icon rotation
-        item.icon.rotation.x += 0.01;
-        item.icon.rotation.y += 0.02;
+        // Floating motion
+        block.position.y = userData.originalY + Math.sin(time * userData.floatSpeed + index) * 3;
         
-        // Scale based on position
-        const worldPos = new THREE.Vector3();
-        item.card.getWorldPosition(worldPos);
-        const distance = worldPos.z;
-        const scale = 1 + (distance / 30) * 0.3;
-        item.card.scale.setScalar(Math.max(0.8, Math.min(1.2, scale)));
+        // Rotation
+        block.rotation.x += userData.rotationSpeed.x;
+        block.rotation.y += userData.rotationSpeed.y;
+        block.rotation.z += userData.rotationSpeed.z;
+        
+        // Scale pulse
+        const scale = 1 + Math.sin(time * 2 + index) * 0.05;
+        block.scale.setScalar(scale);
     });
-
-    renderer.render(scene, camera);
+    
+    // Animate code particles
+    codeParticles.forEach(particles => {
+        particles.rotation.y += 0.001;
+        
+        const positions = particles.geometry.attributes.position.array;
+        for (let i = 0; i < positions.length; i += 3) {
+            positions[i + 1] += Math.sin(time + i) * 0.01;
+        }
+        particles.geometry.attributes.position.needsUpdate = true;
+    });
+    
+    // Animate creative sparks
+    creativeSparks.forEach((spark, index) => {
+        const userData = spark.userData;
+        
+        // Fade in and out
+        userData.opacity += userData.fadeSpeed;
+        if (userData.opacity > 0.3 || userData.opacity < 0) {
+            userData.fadeSpeed *= -1;
+        }
+        spark.material.opacity = Math.max(0, userData.opacity);
+        
+        // Move spark
+        const positions = spark.geometry.attributes.position.array;
+        for (let i = 0; i < positions.length; i += 3) {
+            positions[i] += Math.sin(time + i) * 0.05;
+            positions[i + 1] += Math.cos(time + i) * 0.05;
+        }
+        spark.geometry.attributes.position.needsUpdate = true;
+    });
+    
+    // Camera follows mouse
+    projCamera.position.x = 25 + projMouseX * 10;
+    projCamera.position.y = 15 + projMouseY * 10;
+    projCamera.lookAt(0, 0, 0);
+    
+    projRenderer.render(projScene, projCamera);
 }
 
 // Initialize 3D scene

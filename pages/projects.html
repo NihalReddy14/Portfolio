@@ -52,19 +52,64 @@
 
     <!-- Projects Hero -->
     <section class="projects-hero">
-        <div class="projects-3d-bg" id="projects-canvas"></div>
-        <div class="container">
-            <div class="projects-hero-content">
-                <h1 class="page-title">
-                    <span class="line">My Projects</span>
+        <div class="projects-canvas-container" id="projects-canvas"></div>
+        
+        <div class="projects-hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="line">
+                        <span class="word">My</span>
+                        <span class="word highlight">Projects</span>
+                    </span>
                 </h1>
-                <p class="page-subtitle">Showcasing my technical skills through real-world applications</p>
+                <h2 class="hero-subtitle">
+                    <span>Showcasing my technical skills through real-world applications</span>
+                </h2>
+                <p class="hero-description">
+                    From AI-powered games to full-stack web applications, 
+                    explore my portfolio of innovative solutions.
+                </p>
+                <div class="hero-cta">
+                    <a href="#project-filters" class="btn btn-primary">
+                        <span>Browse Projects</span>
+                        <i class="fas fa-arrow-down"></i>
+                    </a>
+                    <a href="https://github.com/NihalReddy14" target="_blank" class="btn btn-secondary">
+                        <span>View GitHub</span>
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="project-stats">
+                    <div class="stat-item" data-tilt>
+                        <i class="fas fa-code-branch"></i>
+                        <h3>10+</h3>
+                        <p>Projects</p>
+                    </div>
+                    <div class="stat-item" data-tilt>
+                        <i class="fas fa-star"></i>
+                        <h3>50+</h3>
+                        <p>GitHub Stars</p>
+                    </div>
+                    <div class="stat-item" data-tilt>
+                        <i class="fas fa-users"></i>
+                        <h3>3000+</h3>
+                        <p>Users</p>
+                    </div>
+                    <div class="stat-item" data-tilt>
+                        <i class="fas fa-rocket"></i>
+                        <h3>100%</h3>
+                        <p>Success Rate</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Project Filters -->
-    <section class="project-filters">
+    <section class="project-filters" id="project-filters">
         <div class="container">
             <div class="filter-buttons">
                 <button class="filter-btn active" data-filter="all">
@@ -439,6 +484,7 @@
     </footer>
 
     <!-- Scripts -->
+    <script src="../assets/js/universal-3d.js"></script>
     <script src="../assets/js/projects-3d.js"></script>
     <script src="../assets/js/main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>

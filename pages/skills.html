@@ -53,19 +53,64 @@
 
     <!-- Skills Hero -->
     <section class="skills-hero">
-        <div class="skills-3d-bg" id="skills-canvas"></div>
-        <div class="container">
-            <div class="skills-hero-content">
-                <h1 class="page-title">
-                    <span class="line">Technical Skills</span>
+        <div class="skills-canvas-container" id="skills-canvas"></div>
+        
+        <div class="skills-hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="line">
+                        <span class="word">Technical</span>
+                        <span class="word highlight">Skills</span>
+                    </span>
                 </h1>
-                <p class="page-subtitle">Expertise across the full technology stack</p>
+                <h2 class="hero-subtitle">
+                    <span>Expertise across the full technology stack</span>
+                </h2>
+                <p class="hero-description">
+                    From low-level systems programming to modern web frameworks, 
+                    I bring a comprehensive skillset to every project.
+                </p>
+                <div class="hero-cta">
+                    <a href="#skills-visualization" class="btn btn-primary">
+                        <span>Explore Skills</span>
+                        <i class="fas fa-arrow-down"></i>
+                    </a>
+                    <a href="/pages/projects.html" class="btn btn-secondary">
+                        <span>View Projects</span>
+                        <i class="fas fa-folder-open"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="skill-highlights">
+                    <div class="highlight-card" data-tilt>
+                        <i class="fab fa-react"></i>
+                        <h3>Frontend</h3>
+                        <p>React, Next.js, Vue</p>
+                    </div>
+                    <div class="highlight-card" data-tilt>
+                        <i class="fab fa-node-js"></i>
+                        <h3>Backend</h3>
+                        <p>Node.js, Python, Java</p>
+                    </div>
+                    <div class="highlight-card" data-tilt>
+                        <i class="fab fa-aws"></i>
+                        <h3>Cloud</h3>
+                        <p>AWS, Docker, K8s</p>
+                    </div>
+                    <div class="highlight-card" data-tilt>
+                        <i class="fas fa-brain"></i>
+                        <h3>AI/ML</h3>
+                        <p>TensorFlow, PyTorch</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Interactive Skills Visualization -->
-    <section class="skills-visualization">
+    <section class="skills-visualization" id="skills-visualization">
         <div class="container">
             <div class="skills-intro">
                 <h2>My Technology Stack</h2>
@@ -467,6 +512,7 @@
     </footer>
 
     <!-- Scripts -->
+    <script src="../assets/js/universal-3d.js"></script>
     <script src="../assets/js/skills-3d.js"></script>
     <script src="../assets/js/main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
